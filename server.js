@@ -7,7 +7,7 @@ require('dotenv').config()
 
 const app = new Koa();
 
-app.use(koaBody());
+app.use(koaBody()); 
 app.use(cors());
 
 //require the router here 
