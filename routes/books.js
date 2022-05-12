@@ -48,6 +48,7 @@ router.post('/new', (ctx, next) => {
 		ctx.response.status = 400;
 		ctx.body = 'Please enter the data';
 	} else {
+		// eslint-disable-next-line no-unused-vars
 		let newBook = books.push({
 			id: ctx.request.body.id,
 			name: ctx.request.body.name,
