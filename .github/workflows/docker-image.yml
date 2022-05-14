@@ -21,4 +21,7 @@ jobs:
         
       - name: Run Linter
         run: docker-compose -f docker-compose.yml run --rm web npx eslint ./
+        
+      - name: Tear down the Stack
+        run:  docker-compose -f docker-compose.yml down
       
