@@ -5,6 +5,7 @@ const router = new Router({
 });
 
 router.get('/', (ctx, next) => {
+	// eslint-disable-next-line no-undef
 	ctx.body = process.env.VARIABLE;
 	next();
 });
