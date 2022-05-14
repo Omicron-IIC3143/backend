@@ -1,5 +1,4 @@
 /* eslint-disable no-undef */
-// check auto deployment delete later
 'use strict';
 
 const fs = require('fs');
