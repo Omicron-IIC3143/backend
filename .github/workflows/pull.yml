@@ -1,0 +1,27 @@
+name: CI
+
+# Enable Buildkit and let compose use it to speed up image building
+env:
+  DOCKER_BUILDKIT: 1
+  COMPOSE_DOCKER_CLI_BUILD: 1
+
+on:
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  lint-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code Repository
+        uses: actions/checkout@v3
+
+      - name: Build instance
+        run:  docker-compose -f docker-compose.yml build
+        
+      - name: Run Linter
+        run: docker-compose -f docker-compose.yml run --rm web npx eslint ./
+        
+      - name: Tear down the Stack
+        run:  docker-compose -f docker-compose.yml down
+      
