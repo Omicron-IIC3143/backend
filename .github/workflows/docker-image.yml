@@ -18,4 +18,7 @@ jobs:
 
       - name: Build instance
         run:  docker-compose -f docker-compose.yml build
+        
+      - name: Run Linter
+        run: docker-compose -f docker-compose.yml run --rm web npx eslint ./
       
