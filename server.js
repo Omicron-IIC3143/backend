@@ -7,7 +7,7 @@ const db = require('./models');
 require('dotenv').config();
 
 const app = new Koa();
-app.context.db =db;
+app.context.db = db;
 
 app.use(koaBody()); 
 app.use(cors());
@@ -16,11 +16,13 @@ app.use(cors());
 let index = require('./routes/index');
 let books = require('./routes/books');
 let projects = require('./routes/projects');
+let user = require('./routes/users');
 
 //use the router here
 app.use(books.routes());
 app.use(index.routes());
 app.use(projects.routes());
+app.use(user.routes());
 
 const port = process.env.PORT || 8080;
 const host = process.env.HOST;
