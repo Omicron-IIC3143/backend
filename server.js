@@ -15,11 +15,13 @@ app.use(cors());
 //require the router here 
 let index = require('./routes/index');
 let books = require('./routes/books');
+let projects = require('./routes/projects');
 let user = require('./routes/users');
 
 //use the router here
 app.use(books.routes());
 app.use(index.routes());
+app.use(projects.routes());
 app.use(user.routes());
 
 const port = process.env.PORT || 8080;
