@@ -1,28 +1,28 @@
 {
-  "name": "test",
-  "version": "1.0.0",
-  "description": "",
-  "main": "server.js",
-  "scripts": {
-    "dev": "nodemon server.js",
-    "test": "test"
-  },
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "bcrypt": "^5.0.1",
-    "dotenv": "^16.0.1",
-    "koa": "^2.13.4",
-    "koa-body": "^5.0.0",
-    "koa-router": "^10.1.1",
-    "koa2-cors": "^2.0.6",
-    "pg": "^8.7.3",
-    "save": "^2.5.0",
-    "sequelize": "^6.19.0",
-    "sequelize-cli": "^6.4.1"
-  },
-  "devDependencies": {
-    "eslint": "^8.15.0",
-    "nodemon": "^2.0.15"
-  }
+    "name": "test",
+    "version": "1.0.0",
+    "description": "",
+    "main": "server.js",
+    "scripts": {
+        "dev": "nodemon -L server.js",
+        "test": "test"
+    },
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "bcrypt": "^5.0.1",
+        "dotenv": "^16.0.1",
+        "koa": "^2.13.4",
+        "koa-body": "^5.0.0",
+        "koa-router": "^10.1.1",
+        "koa2-cors": "^2.0.6",
+        "pg": "^8.7.3",
+        "save": "^2.5.0",
+        "sequelize": "^6.19.0",
+        "sequelize-cli": "^6.4.1"
+    },
+    "devDependencies": {
+        "eslint": "^8.15.0",
+        "nodemon": "^2.0.15"
+    }
 }
