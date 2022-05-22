@@ -4,7 +4,7 @@ services:
     container_name: my_app_node
     restart: always
     volumes:
-      - .:/app/
+      - .:/usr/src
     ports:
       - "8080:8080"
     command:
