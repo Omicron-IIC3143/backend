@@ -7,7 +7,7 @@ WORKDIR /usr/src
 COPY package*.json *.lock ./
 
 # Install dependencies
-RUN npm ci
+RUN npm install
 
 # Copy start script and grant access to execute
 COPY ./ /start
