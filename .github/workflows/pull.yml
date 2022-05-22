@@ -20,7 +20,7 @@ jobs:
         run: docker-compose -f docker-compose.yml build
         
       - name: Test Linter
-        run: docker-compose -f docker-compose.yml run --rm web npx eslint ./
+        run: docker-compose -f docker-compose.yml run --rm web npm run lint
         
       - name: Tear down the Stack
         run:  docker-compose -f docker-compose.yml down
