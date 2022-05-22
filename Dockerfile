@@ -7,12 +7,10 @@ WORKDIR /usr/src
 COPY package*.json *.lock ./
 
 # Install dependencies
-RUN npm install
+RUN yarn install
 
 # Copy start script and grant access to execute
-COPY ./ /start
-RUN chmod +x /start
-
+COPY . .
 EXPOSE 8080
 
-CMD [ "/start" ]
+CMD [ "yarn", "dev" ]

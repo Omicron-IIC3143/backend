@@ -6,8 +6,8 @@
   "scripts": {
     "dev": "nodemon server.js",
     "test": "test",
-    "lint": "eslint src/",
-    "lint-fix": "eslint --fix /src"
+    "lint": "eslint ./",
+    "lint-fix": "eslint --fix ./"
   },
   "author": "",
   "license": "ISC",

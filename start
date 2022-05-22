@@ -6,4 +6,4 @@ set -o nounset
 
 # yarn db:migrate
 # yarn db:seed
-npm run dev
+yarn dev
