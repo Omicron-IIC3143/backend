@@ -18,7 +18,7 @@ jobs:
 
       - name: Build instance and test Linter
         run:  | 
-          docker-compose -f docker-compose.yml build \
+          docker-compose -f docker-compose.yml build
           docker-compose exec web npx eslint ./
         
       - name: Tear down the Stack
