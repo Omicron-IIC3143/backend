@@ -2,16 +2,17 @@ services:
     web:
         build: .
         container_name: my_app_node
-        restart: always
+        command: 'npm run dev'
         volumes:
-            - .:/app/
+            - .:/usr/app/
+            - /usr/app/node_modules
         ports:
             - '8080:8080'
-        command: 'npm run dev'
-        env_file:
-            - ./.env
         depends_on:
             - postgres
+        env_file:
+            - ./.env
+        restart: always
 
     postgres:
         image: postgres

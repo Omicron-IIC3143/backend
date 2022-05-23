@@ -17,7 +17,7 @@ app.context.db = db;
 app.use(koaBody()); 
 app.use(cors());
 
-// sessions
+/* // sessions
 app.keys = ['super-secret-key'];
 app.use(session(app));
 
@@ -26,7 +26,7 @@ app.use(bodyParser());
 
 // authentication
 app.use(passport.initialize());
-app.use(passport.session());
+app.use(passport.session()); */
 
 //require the router here 
 let index = require('./routes/index');
@@ -45,42 +45,49 @@ const port = process.env.PORT || 8080;
 const host = process.env.HOST;
 
 
-const LocalStrategy = require('passport-local').Strategy;
+/* const LocalStrategy = require('passport-local').Strategy;
 
 const options = {
 	usernameField: 'email',
 	passwordField: 'password'
 };
 
-function comparePass(userPassword, databasePassword) {
-	return bcrypt.compareSync(userPassword, databasePassword);
-}
-
-passport.serializeUser((user, done) => { 
-	console.log('here, SERIALIZER');
-	done(null, user.id);
+passport.serializeUser((user, done) => {
+	console.log('SERIALIZER');
+	done(null, {id: user.id, username: user.email});
 });
 
-passport.deserializeUser((id, done) => {
-	console.log('here, DESERIALIZER');
-	db.User.findOne({where: {id}})
-		.then((user) => { done(null, user); })
-		.catch((err) => { done(err, null); });
-});
-
-passport.use(new LocalStrategy(options, (username, password, done) => {
-	console.log('here, LOCALSTRATEGY');
-	db.User.findOne({where: {email: username}})
+passport.deserializeUser(async (id, done) => {
+	console.log('DESERIALIZER');
+	await db.User.findOne({where: {id}})
 		.then((user) => {
-			if (!user) return done(null, false);
-			if (!comparePass(password, user.password)) {
+			console.log('GOOD DESERIALIZER', user);
+			done(null, user);
+		})
+		.catch((err) => { 
+			console.log('BAD DESERIALIZER', err);
+			done(err, null); });
+});
+
+passport.use(new LocalStrategy(options, async (username, password, done) => {
+	console.log('LOCALSTRATEGY');
+	await db.User.findOne({where: {email: username}})
+		.then(async (user) => {
+			if (!user) {
+				return done(null, false);
+			}
+			if (!(password === user.password)) {
 				return done(null, false);
 			} else {
+				console.log('WORKED, NOW RETURNING USER');
 				return done(null, user);
 			}
 		})
-		.catch((err) => { return done(err); });
-}));
+		.catch((err) => { 
+			console.log(err, 'LOCAL STRATEGY ERROR');
+			return done(err);
+		});
+})); */
 
 db.sequelize
 	.authenticate()
