@@ -1,15 +1,16 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-undef */
 const Koa = require('koa');
-const bodyParser = require('koa-bodyparser');
-const session = require('koa-session');
-const passport = require('koa-passport');
 const koaBody = require('koa-body');
 const cors = require('koa2-cors');
 const db = require('./models');
-const bcrypt = require('bcryptjs');
-
 require('dotenv').config();
+
+const passport = require('koa-passport');
+const LocalStrategy = require('passport-local').Strategy;
+const bodyParser = require('koa-bodyparser');
+const session = require('koa-session');
+const bcrypt = require('bcryptjs');
 
 const app = new Koa();
 app.context.db = db;
@@ -17,16 +18,14 @@ app.context.db = db;
 app.use(koaBody()); 
 app.use(cors());
 
-/* // sessions
+// sessions
 app.keys = ['super-secret-key'];
 app.use(session(app));
-
 // body parser
 app.use(bodyParser());
-
 // authentication
 app.use(passport.initialize());
-app.use(passport.session()); */
+app.use(passport.session());
 
 //require the router here 
 let index = require('./routes/index');
@@ -40,21 +39,12 @@ app.use(index.routes());
 app.use(projects.routes());
 app.use(user.routes());
 
-
 const port = process.env.PORT || 8080;
 const host = process.env.HOST;
 
-
-/* const LocalStrategy = require('passport-local').Strategy;
-
-const options = {
-	usernameField: 'email',
-	passwordField: 'password'
-};
-
 passport.serializeUser((user, done) => {
 	console.log('SERIALIZER');
-	done(null, {id: user.id, username: user.email});
+	done(null, user.id);
 });
 
 passport.deserializeUser(async (id, done) => {
@@ -69,14 +59,21 @@ passport.deserializeUser(async (id, done) => {
 			done(err, null); });
 });
 
-passport.use(new LocalStrategy(options, async (username, password, done) => {
+passport.use(new LocalStrategy({
+	usernameField: 'email',
+	passwordField: 'password'
+}, async (username, password, done) => {
 	console.log('LOCALSTRATEGY');
 	await db.User.findOne({where: {email: username}})
 		.then(async (user) => {
 			if (!user) {
+				console.log('NOT USER');
 				return done(null, false);
 			}
-			if (!(password === user.password)) {
+			if ((!(password === user.password) && !(bcrypt.compareSync(password, user.password)))) {
+				console.log(password);
+				console.log(user.password);
+				console.log('NOT PASSWORD MATCH');
 				return done(null, false);
 			} else {
 				console.log('WORKED, NOW RETURNING USER');
@@ -87,7 +84,7 @@ passport.use(new LocalStrategy(options, async (username, password, done) => {
 			console.log(err, 'LOCAL STRATEGY ERROR');
 			return done(err);
 		});
-})); */
+}));
 
 db.sequelize
 	.authenticate()
