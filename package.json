@@ -5,7 +5,9 @@
   "main": "server.js",
   "scripts": {
     "dev": "nodemon server.js",
-    "test": "test"
+    "test": "test",
+    "lint": "eslint ./",
+    "lint-fix": "eslint ./ --fix"
   },
   "author": "",
   "license": "ISC",
