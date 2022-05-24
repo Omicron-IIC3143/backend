@@ -32,7 +32,7 @@ router.get('/:id', async (ctx, next) => {
 		if (report.length === 0){
 			throw new Error(`There's no report under id: ${ctx.params.id}`);
 		}else {
-			ctx.body = report;
+			ctx.body = report[0];
 			next();
 		}
 	}catch (ValidationError) {

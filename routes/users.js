@@ -32,7 +32,7 @@ router.get('/:id', async (ctx, next) => {
 		if (user.length === 0){
 			throw new Error(`There's no user under id: ${ctx.params.id}`);
 		}else {
-			ctx.body = user;
+			ctx.body = user[0];
 			next();
 		}
 	}catch (ValidationError) {
