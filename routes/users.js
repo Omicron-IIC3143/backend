@@ -9,25 +9,34 @@ const router = new Router({
 // Routes will go here
 //Get
 router.get('/', async (ctx, next) => {
-	const users = await ctx.db.User.findAll();
-	ctx.body = users;
-	next();
+	try{
+		const users = await ctx.db.User.findAll();
+		if (users.length === 0){
+			throw new Error('We couldn\'t find any users');
+		}else{
+			ctx.body = users;
+			next();
+		}
+	}catch (ValidationError) {
+		ctx.throw(400, `${ValidationError}`);
+	}
 });
 
 //Get id
 router.get('/:id', async (ctx, next) => {
-	var param = ctx.params.id; 
-	let user = await ctx.db.User.findAll({
-		where: {
-			id: param
-		},});
-	if (user.length === 0){
-		ctx.response.status = 404;
-		ctx.body = 'there\'s no user under that id';
-		next();
-	}else {
-		ctx.body = user;
-		next();
+	try{
+		let user = await ctx.db.User.findAll({
+			where: {
+				id: ctx.params.id
+			},});
+		if (user.length === 0){
+			throw new Error(`There's no user under id: ${ctx.params.id}`);
+		}else {
+			ctx.body = user[0];
+			next();
+		}
+	}catch (ValidationError) {
+		ctx.throw(404, `${ValidationError}`);
 	}
 });
 
@@ -41,46 +50,44 @@ router.post('/new', async (ctx) => {
 		ctx.response.status = 201;
 		ctx.body = 'New user added';
 	} catch (ValidationError) {
-		ctx.throw(400, `The parameters you have given are not valid, here is the error ${ValidationError}`);
+		ctx.throw(400, 'Couldn\'t add the new user');
 	}
 });
 
 router.delete('/delete/:id', async (ctx) => {
 	try {
-		var param = ctx.params.id;
 		const deleted = await ctx.db.User.destroy({
 			where: {
-				id: param
+				id: ctx.params.id
 			},});
 		if (deleted > 0) {
 			ctx.response.status = 200;
-			ctx.body = `User ${param} deleted`;
+			ctx.body = `User ${ctx.params.id} deleted`;
 		}
 		else{
 			throw new Error('User not found');
 		}
 	} catch (ValidationError) {
-		ctx.throw(400, `The parameters you have given are not valid, here is the error ${ValidationError}`);
+		ctx.throw(400, `${ValidationError}`);
 	}
 });
 
 router.put('/:id', async (ctx) => {
 	// eslint-disable-next-line no-unused-vars
 	try{
-		var param = ctx.params.id;
 		var data = ctx.request.body;
 		const update = await ctx.db.User.update(data, {
 			where: {
-				id: param
+				id: ctx.params.id
 			},});
 		if (update > 0){
 			ctx.response.status = 200;
 			ctx.body = 'User updated';
 		}else{
-			throw new Error('Something is wrong');
+			throw new Error('Something is wrong check the parameters');
 		}
 	} catch (ValidationError) {
-		ctx.throw(400, `The parameters you have given are not valid, here is the error ${ValidationError}`);
+		ctx.throw(400, `${ValidationError}`);
 	}
 });
 
