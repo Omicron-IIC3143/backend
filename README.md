@@ -4,4 +4,4 @@ To run:
 
 - download repository
 - docker-compose build
-- docker-compose up
+- docker-compose up -d
