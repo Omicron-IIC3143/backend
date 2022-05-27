@@ -1,12 +1,11 @@
-/* eslint-disable no-undef */
 const Router = require('koa-router');
 const bcrypt = require('bcryptjs');
 const passport = require('koa-passport');
 const jwt = require('jsonwebtoken');
 
+// eslint-disable-next-line no-undef
 const secret = process.env.JWT_SECRET;
 
-// Prefix all routes with: /users
 const router = new Router({
 	prefix: '/users'
 });
@@ -16,7 +15,7 @@ const router = new Router({
 router.get('/', passport.authenticate('jwt', { session: false }), async (ctx, next) => {
 	try {
 		const users = await ctx.db.User.findAll();
-		if (users.length === 0){
+		if (users.length === 0) {
 			throw new Error('We couldn\'t find any users');
 		} else {
 			ctx.body = users;
@@ -31,13 +30,11 @@ router.get('/', passport.authenticate('jwt', { session: false }), async (ctx, ne
 // Get user by id
 router.get('/:id', passport.authenticate('jwt', { session: false }), async (ctx, next) => {
 	try{
-		let user = await ctx.db.User.findAll({
-			where: {
-				id: ctx.params.id
-			},});
-		if (user.length === 0){
+		let user = await ctx.db.User.findAll({where: {id: ctx.params.id}});
+
+		if (user.length === 0) {
 			throw new Error(`There's no user under id: ${ctx.params.id}`);
-		}else {
+		} else {
 			ctx.body = user[0];
 			next();
 		}
@@ -74,6 +71,7 @@ router.post('/register', async (ctx) => {
 	}
 });
 
+
 // Login user
 router.post('/login', async (ctx) => {
 	const body = ctx.request.body;
@@ -98,18 +96,15 @@ router.post('/login', async (ctx) => {
 	}
 });
 
+
 // Delete a user by id
 router.delete('/delete/:id', passport.authenticate('jwt', { session: false }), async (ctx) => {
 	try {
-		const deleted = await ctx.db.User.destroy({
-			where: {
-				id: ctx.params.id
-			},});
+		const deleted = await ctx.db.User.destroy({where: {id: ctx.params.id}});
 		if (deleted > 0) {
 			ctx.response.status = 200;
 			ctx.body = `User ${ctx.params.id} deleted`;
-		}
-		else{
+		} else {
 			throw new Error('User not found');
 		}
 	} catch (ValidationError) {
@@ -117,18 +112,16 @@ router.delete('/delete/:id', passport.authenticate('jwt', { session: false }), a
 	}
 });
 
+
 // Edit user by id
 router.put('/:id', passport.authenticate('jwt', { session: false }), async (ctx) => {
 	try{
 		var data = ctx.request.body;
-		const update = await ctx.db.User.update(data, {
-			where: {
-				id: ctx.params.id
-			},});
-		if (update > 0){
+		const update = await ctx.db.User.update(data, {where: {id: ctx.params.id}});
+		if (update > 0) {
 			ctx.response.status = 200;
 			ctx.body = 'User updated';
-		}else{
+		} else {
 			throw new Error('Something is wrong check the parameters');
 		}
 	} catch (ValidationError) {

@@ -1,13 +1,21 @@
 /* eslint-disable no-unused-vars */
 'use strict';
+const bcrypt = require('bcryptjs');
+
+function hashPassword(password) {
+	const salt = bcrypt.genSaltSync();
+	const hash = bcrypt.hashSync(password, salt);
+	return hash;
+}
 
 module.exports = {
 	up: (queryInterface, Sequelize) => {
+
 		return queryInterface.bulkInsert('Users', [{
 			name: 'vicho',
 			rut: '123',
 			email:'vicho@uc.cl',
-			password: 'vicho',
+			password: hashPassword('vicho'),
 			isAdmin: true,
 			money: 0,
 			picture: 'hello',
@@ -18,7 +26,7 @@ module.exports = {
 			name: 'anto',
 			rut: '123',
 			email:'antoo@uc.cl',
-			password: 'anto',
+			password: hashPassword('anto'),
 			isAdmin: true,
 			money: 0,
 			picture: 'hello',
