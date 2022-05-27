@@ -17,10 +17,10 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Build instance
-        run:  docker-compose -f docker-compose.yml build
+        run: docker-compose -f docker-compose.yml build
         
-      - name: Run Linter
-        run: docker-compose -f docker-compose.yml run --rm web npx eslint ./
+      - name: Test Linter
+        run: docker-compose -f docker-compose.yml run --rm web npm run lint
         
       - name: Tear down the Stack
         run:  docker-compose -f docker-compose.yml down
