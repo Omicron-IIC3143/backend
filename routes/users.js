@@ -1,6 +1,10 @@
+/* eslint-disable no-undef */
 const Router = require('koa-router');
 const bcrypt = require('bcryptjs');
 const passport = require('koa-passport');
+const jwt = require('jsonwebtoken');
+
+const secret = process.env.JWT_SECRET;
 
 // Prefix all routes with: /users
 const router = new Router({
@@ -9,14 +13,14 @@ const router = new Router({
 
 // Routes will go here
 //Get
-router.get('/', async (ctx, next) => {
+router.get('/', passport.authenticate('jwt', { session: false }), async (ctx, next) => {
 	const users = await ctx.db.User.findAll();
 	ctx.body = users;
 	next();
 });
 
 //Get id
-router.get('/:id', async (ctx, next) => {
+router.get('/:id', passport.authenticate('jwt', { session: false }), async (ctx, next) => {
 	var param = ctx.params.id; 
 	let user = await ctx.db.User.findAll({
 		where: {
@@ -33,30 +37,27 @@ router.get('/:id', async (ctx, next) => {
 });
 
 //Post
-router.post('/auth/new', async (ctx) => {
+router.post('/new', async (ctx) => {
 	try{
 		const body = ctx.request.body;
-		const salt = bcrypt.genSaltSync();
-		const hash = bcrypt.hashSync(body.password, salt);
-		body.password = hash;
-		const user = await ctx.db.User.build(body);
-		await user.save();
-
+		const oldUser = await ctx.db.User.findOne({where: {email: body.email}});
 		
+		if (oldUser) {
+			ctx.response.status = 403;
+			ctx.body = 'Error: Email already in use';
+		} else {
+			const salt = bcrypt.genSaltSync();
+			const hash = bcrypt.hashSync(body.password, salt);
+			body.password = hash;
+			const user = await ctx.db.User.build(body);
+			await user.save();
 
-		return await passport.authenticate('local', function (error, user, info) {
-			console.log('HEREEEE AUTH!');
-			if (error) {
-				ctx.response.status = 401;
-				ctx.body = error;
-			} else if (!user) {
-				ctx.response.status = 401;
-				ctx.body = info;
-			} else {
-				ctx.response.status = 201;
-				ctx.body = `New user added: ${user.name}`;
-			}
-		})(ctx);
+			const token = jwt.sign(body, secret, {subject: user.id.toString()});
+
+			ctx.token = token;
+			ctx.response.status = 200;
+			ctx.body = {user, token};
+		}
 
 	} catch (ValidationError) {
 		ctx.throw(400, `The parameters you have given are not valid, here is the error ${ValidationError}`);
@@ -64,42 +65,26 @@ router.post('/auth/new', async (ctx) => {
 });
 
 
-router.post('/auth/login', async (ctx) => {
-	console.log('HERE IN POST LOGIN');
-	return await passport.authenticate('local', function (error, user, info) {
-		if (error) {
+router.post('/login', async (ctx) => {
+	const body = ctx.request.body;
+	const user = await ctx.db.User.findOne({where: {email: body.email}});
+
+	if (!user) {
+		ctx.response.status = 401;
+		ctx.body = 'Error: User does not exist.';
+	} else {
+		const passwordMatch = bcrypt.compareSync(body.password, user.password);
+
+		if (!passwordMatch) {
 			ctx.response.status = 401;
-			ctx.body = error;
-		} else if (!user) {
-			ctx.response.status = 401;
-			ctx.body = info;
+			ctx.body = 'Error: Incorrect password.';
 		} else {
-			ctx.response.status = 200;
-			ctx.body = `${user.name}`;
-		}
-	})(ctx);
-});
-
-router.get('/auth/status', async (ctx) => {
-	console.log('HERE IN STATUS');
-	if (ctx.isAuthenticated()) {
-		ctx.body = 'You are authenticated';
-		ctx.response.status = 200;
-	} else {
-		ctx.throw(400, 'You are not authenticated. Please log in to access the application.');
-	}
+			const token = jwt.sign(body, secret, {subject: user.id.toString()});
 	
-});
-
-
-router.post('/auth/logout', async (ctx) => {
-	console.log(ctx.isAuthenticated());
-	if (ctx.isAuthenticated()) {
-		console.log('LOG OUT');
-		ctx.logout();
-	} else {
-		ctx.body = { success: false };
-		ctx.throw(401);
+			ctx.token = token;
+			ctx.response.status = 200;
+			ctx.body = {user, token};
+		}
 	}
 });
 
