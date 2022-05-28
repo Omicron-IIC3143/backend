@@ -81,6 +81,7 @@ router.post('/login', async (ctx) => {
 		ctx.response.status = 401;
 		ctx.body = 'Error: User does not exist.';
 	} else {
+		console.log(body.password, user.password);
 		const passwordMatch = bcrypt.compareSync(body.password, user.password);
 
 		if (!passwordMatch) {

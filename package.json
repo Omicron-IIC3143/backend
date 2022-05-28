@@ -4,7 +4,7 @@
     "description": "",
     "main": "server.js",
     "scripts": {
-        "dev": "nodemon server.js",
+        "dev": "nodemon -L server.js",
         "test": "test",
         "lint": "eslint ./",
         "lint-fix": "eslint ./ --fix"
