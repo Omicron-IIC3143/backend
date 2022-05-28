@@ -24,7 +24,8 @@ module.exports = (sequelize, DataTypes) => {
 		goalAmount: DataTypes.FLOAT,
 		currentState: DataTypes.STRING,
 		deadlineTime: DataTypes.INTEGER,
-		date: DataTypes.DATE
+		date: DataTypes.DATE,
+		tags: DataTypes.TEXT
 	}, {
 		sequelize,
 		modelName: 'Project',

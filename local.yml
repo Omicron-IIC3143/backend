@@ -1,28 +1,28 @@
 services:
-  web:
-    build: .
-    container_name: my_app_node
-    restart: always
-    volumes:
-      - .:/usr/app/
-    ports:
-      - "8080:8080"
-    command: "npm run dev"
-    env_file:
-      - ${{secrets.ENV}}
-    depends_on:
-      - postgres
+    web:
+        build: .
+        container_name: my_app_node
+        restart: always
+        volumes:
+            - .:/usr/app/
+        ports:
+            - '8080:8080'
+        command: 'npm run dev'
+        env_file:
+            - ${{secrets.ENV}}
+        depends_on:
+            - postgres
 
-  postgres:
-    image: postgres
-    container_name: my_app_psql
-    ports:
-      - 5432:5432
-    env_file:
-      - ./.env_db
-    volumes:
-      - postgresdata:/var/lib/postgresql/data
+    postgres:
+        image: postgres
+        container_name: my_app_psql
+        ports:
+            - 5432:5432
+        env_file:
+            - ./.env_db
+        volumes:
+            - postgresdata:/var/lib/postgresql/data
 
 volumes:
-  postgresdata:
-    # command: "node app.js"
+    postgresdata:
+        # command: "node app.js"
