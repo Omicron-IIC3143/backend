@@ -5,7 +5,7 @@
     "main": "server.js",
     "scripts": {
         "dev": "nodemon -L server.js",
-        "test": "test",
+        "test": "jest --runInBand",
         "lint": "eslint ./",
         "lint-fix": "eslint ./ --fix"
     },
@@ -31,6 +31,8 @@
     },
     "devDependencies": {
         "eslint": "^8.15.0",
-        "nodemon": "^2.0.15"
+        "jest": "^28.1.0",
+        "nodemon": "^2.0.15",
+        "supertest": "^6.2.3"
     }
 }
