@@ -4,7 +4,7 @@ module.exports = {
 		return queryInterface.bulkInsert('Projects', [{
 			name: 'Teleton',
 			description: 'Esta es la descripcion del proyecto Teleton',
-			picture: 'foto de teleton',
+			pictureUrl: 'foto de teleton',
 			company: 'Teleton S.A',
 			topic: 'Ayuda social',
 			currentAmount: 1000000,
@@ -20,7 +20,7 @@ module.exports = {
 		{
 			name: 'Colecta Social',
 			description: 'Esta es la descripcion del proyecto de Colecta Social',
-			picture: 'foto de colecta social',
+			pictureUrl: 'foto de colecta social',
 			company: 'Colecta Social S.A',
 			topic: 'Ayuda social',
 			currentAmount: 723000,
@@ -36,7 +36,7 @@ module.exports = {
 		{
 			name: 'Un Techo para Chile',
 			description: 'Esta es la descripcion del proyecto Un Techo para Chile',
-			picture: 'foto de un techo para chile',
+			pictureUrl: 'foto de un techo para chile',
 			company: 'Techo para Chile ltda',
 			topic: 'Ayuda social',
 			currentAmount: 50900,

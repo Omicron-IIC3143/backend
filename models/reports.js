@@ -23,7 +23,7 @@ module.exports = (sequelize, DataTypes) => {
 			type: DataTypes.TEXT,
 			allowNull: false,
 		},
-		picture: DataTypes.TEXT,
+		pictureUrl: DataTypes.TEXT,
 		projectId: {
 			type: DataTypes.INTEGER,
 			allowNull: false,
