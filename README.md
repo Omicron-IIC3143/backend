@@ -3,7 +3,7 @@ Main Heroku App:
 
 - "https://social-starter.herokuapp.com/"
 
-Documentation:
+Endpoints documentation:
 
 - https://documenter.getpostman.com/view/9674248/Uz5CLxoi
 
