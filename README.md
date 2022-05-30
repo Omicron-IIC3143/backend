@@ -1,7 +1,7 @@
 # SocialStarterBackend
 Dev heroku link:
 
-- "https://social-starter-dev.herokuapp.com/"
+- https://social-starter-dev.herokuapp.com/
 
 Endpoint documentation:
 
