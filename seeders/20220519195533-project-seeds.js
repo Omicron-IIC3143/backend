@@ -14,7 +14,8 @@ module.exports = {
 			date: new Date(),
 			tags: 'tag-1,tag-2',
 			createdAt: new Date(),
-			updatedAt: new Date()
+			updatedAt: new Date(),
+			userId: 1,
 		},
 		{
 			name: 'Colecta Social',
@@ -29,7 +30,8 @@ module.exports = {
 			date: new Date(),
 			tags: 'tag-1,tag-2,tag-3',
 			createdAt: new Date(),
-			updatedAt: new Date()
+			updatedAt: new Date(),
+			userId: 1,
 		},
 		{
 			name: 'Un Techo para Chile',
@@ -44,7 +46,7 @@ module.exports = {
 			date: new Date(),
 			tags: 'tag-1',
 			createdAt: new Date(),
-			updatedAt: new Date()
+			updatedAt: new Date(),
 		},]);
 	},
 	down: (queryInterface, Sequelize) => {

@@ -15,17 +15,51 @@ module.exports = (sequelize, DataTypes) => {
 		}
 	}
 	Project.init({
-		name: DataTypes.STRING,
-		description: DataTypes.TEXT,
-		picture: DataTypes.TEXT,
-		company: DataTypes.STRING,
-		topic: DataTypes.STRING,
-		currentAmount: DataTypes.FLOAT,
-		goalAmount: DataTypes.FLOAT,
-		currentState: DataTypes.STRING,
-		deadlineTime: DataTypes.INTEGER,
-		date: DataTypes.DATE,
-		tags: DataTypes.TEXT
+		name: {
+			type: DataTypes.STRING,
+			allowNull: false,
+		},
+		description: {
+			type: DataTypes.TEXT,
+			allowNull: false,
+		},
+		picture: {
+			type: DataTypes.TEXT,
+			allowNull: true,
+		},
+		company: {
+			type: DataTypes.STRING,
+			allowNull: false,
+		},
+		topic: {
+			type: DataTypes.STRING,
+			allowNull: false,
+		},
+		currentAmount: {
+			type: DataTypes.FLOAT,
+			allowNull: false,
+		},
+		goalAmount: {
+			type: DataTypes.FLOAT,
+			allowNull: false,
+		},
+		currentState: {
+			type: DataTypes.STRING,
+			defaultValue: 'pending',
+		},
+		deadlineTime: {
+			type: DataTypes.INTEGER,
+			allowNull: false,
+		},
+		date: {
+			type: DataTypes.DATE,
+			allowNull: false,
+		},
+		tags: DataTypes.TEXT,
+		userId: {
+			type: DataTypes.STRING,
+			allowNull: false,
+		},
 	}, {
 		sequelize,
 		modelName: 'Project',

@@ -16,12 +16,32 @@ module.exports = (sequelize, DataTypes) => {
 		}
 	}
 	User.init({
-		name: DataTypes.STRING,
-		email: DataTypes.STRING,
-		rut: DataTypes.STRING,
-		password: DataTypes.STRING,
-		isAdmin: DataTypes.BOOLEAN,
-		money: DataTypes.FLOAT,
+		name: {
+			type: DataTypes.STRING,
+			allowNull: false,
+		},
+		email: {
+			type: DataTypes.STRING,
+			allowNull: false,
+			unique: true,
+		},
+		rut: {
+			type: DataTypes.STRING,
+			allowNull: false,
+		},
+		password: {
+			type: DataTypes.STRING,
+			allowNull: false,
+		},
+		isAdmin: {
+			type: DataTypes.BOOLEAN,
+			defaultValue: false,
+		},
+		money: {
+			type: DataTypes.FLOAT,
+			allowNull: false,
+			defaultValue: 0,
+		},
 		picture: DataTypes.TEXT,
 		description: DataTypes.TEXT
 	}, {
