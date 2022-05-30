@@ -1,7 +1,7 @@
 # SocialStarterBackend
 Main Heroku App:
 
-- "https://social-starter.herokuapp.com/"
+- https://social-starter.herokuapp.com/
 
 Endpoints documentation:
 
