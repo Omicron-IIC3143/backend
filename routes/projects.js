@@ -52,7 +52,7 @@ router.post('/new', passport.authenticate('jwt', { session: false }), async (ctx
 		ctx.response.status = 201;
 		ctx.body = 'New project added:';
 	} catch (ValidationError) {
-		ctx.throw(400, `Couldn\'t add the new project: ${ValidationError}`);
+		ctx.throw(400, `Couldn't add the new project: ${ValidationError}`);
 	}
 });
 
