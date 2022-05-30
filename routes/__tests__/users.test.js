@@ -16,7 +16,7 @@ describe('Users Test Suite', function() {
 		email: 'jest_testing11@email.com',
 		password: 'jest_password',
 		money: 0,
-		picture: 'some picture url',
+		pictureUrl: 'some picture url',
 		description: 'some testing description'
 	};
 	let jwt;
