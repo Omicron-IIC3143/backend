@@ -15,10 +15,19 @@ module.exports = (sequelize, DataTypes) => {
 		}
 	}
 	Reports.init({
-		title: DataTypes.TEXT,
-		description: DataTypes.TEXT,
+		title: {
+			type: DataTypes.TEXT,
+			allowNull: false,
+		},
+		description: {
+			type: DataTypes.TEXT,
+			allowNull: false,
+		},
 		picture: DataTypes.TEXT,
-		projectId: DataTypes.INTEGER
+		projectId: {
+			type: DataTypes.INTEGER,
+			allowNull: false,
+		}
 	}, {
 		sequelize,
 		modelName: 'Reports',

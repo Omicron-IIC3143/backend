@@ -46,7 +46,7 @@ router.post('/new', passport.authenticate('jwt', { session: false }), async (ctx
 		await new_project.save();
 		ctx.body = new_project;
 		ctx.response.status = 201;
-		ctx.body = 'New user added:';
+		ctx.body = 'New project added:';
 	} catch (ValidationError) {
 		ctx.throw(400, 'Couldn\'t add the new project');
 	}
