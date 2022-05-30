@@ -42,13 +42,17 @@ router.get('/:id', passport.authenticate('jwt', { session: false }), async (ctx,
 // Post new project
 router.post('/new', passport.authenticate('jwt', { session: false }), async (ctx) => {
 	try {
+		let user = await ctx.db.User.findAll({where: {id: ctx.request.body.userId}});
+		if (user.length === 0){
+			throw new Error(`There's no user under the id: ${ctx.request.body.userId}, to manage this project use another userId`);
+		}
 		const new_project = await ctx.db.Project.build(ctx.request.body);
 		await new_project.save();
 		ctx.body = new_project;
 		ctx.response.status = 201;
-		ctx.body = 'New user added:';
+		ctx.body = 'New project added:';
 	} catch (ValidationError) {
-		ctx.throw(400, 'Couldn\'t add the new project');
+		ctx.throw(400, `Couldn't add the new project: ${ValidationError}`);
 	}
 });
 

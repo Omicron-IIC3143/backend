@@ -43,6 +43,22 @@ router.get('/:id', passport.authenticate('jwt', { session: false }), async (ctx,
 	}
 });
 
+// Get user projects by id
+router.get('/:id/projects', passport.authenticate('jwt', { session: false }), async (ctx, next) => {
+	try{
+		let userProjects = await ctx.db.Project.findAll({where: {userId: ctx.params.id}});
+
+		if (userProjects.length === 0) {
+			throw new Error(`User with id: ${ctx.params.id} has no projects`);
+		} else {
+			ctx.body = userProjects;
+			next();
+		}
+	}catch (ValidationError) {
+		ctx.throw(404, `${ValidationError}`);
+	}
+});
+
 
 // Register new user
 router.post('/register', async (ctx) => {
@@ -56,7 +72,7 @@ router.post('/register', async (ctx) => {
 		} else {
 			const salt = bcrypt.genSaltSync();
 			const hash = bcrypt.hashSync(body.password, salt);
-			body.password = hash;
+			body.password = hash; 
 			const user = await ctx.db.User.build(body);
 			await user.save();
 
