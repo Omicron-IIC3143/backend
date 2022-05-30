@@ -134,10 +134,19 @@ router.delete('/delete/:id', passport.authenticate('jwt', { session: false }), a
 router.put('/:id', passport.authenticate('jwt', { session: false }), async (ctx) => {
 	try{
 		var data = ctx.request.body;
+
+		if (data.password) {
+			const salt = bcrypt.genSaltSync();
+			const hash = bcrypt.hashSync(data.password, salt);
+			data.password = hash;
+		}
+
 		const update = await ctx.db.User.update(data, {where: {id: ctx.params.id}});
+
 		if (update > 0) {
+			const updated_user = await ctx.db.User.findOne({where: {id: ctx.params.id}});
+			ctx.body = {user: updated_user};
 			ctx.response.status = 200;
-			ctx.body = 'User updated';
 		} else {
 			throw new Error('Something is wrong check the parameters');
 		}
