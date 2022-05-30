@@ -43,7 +43,7 @@ router.get('/:id', passport.authenticate('jwt', { session: false }), async (ctx,
 	}
 });
 
-// Get user by id
+// Get user projects by id
 router.get('/:id/projects', passport.authenticate('jwt', { session: false }), async (ctx, next) => {
 	try{
 		let userProjects = await ctx.db.Project.findAll({where: {userId: ctx.params.id}});
