@@ -14,7 +14,6 @@ const config = {
 	},
 	test: {
 		extend: 'default',
-		database: 'test',
 	},
 	production: {
 		extend: 'default',

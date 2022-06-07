@@ -17,8 +17,8 @@ module.exports = {
 			email:'vicho@uc.cl',
 			password: hashPassword('vicho'),
 			isAdmin: true,
-			money: 0.0,
-			picture: 'hello',
+			money: 0,
+			pictureUrl: 'hello',
 			description: 'description',
 			createdAt: new Date(),
 			updatedAt: new Date()
@@ -28,8 +28,8 @@ module.exports = {
 			email:'antoo@uc.cl',
 			password: hashPassword('anto'),
 			isAdmin: true,
-			money: 0.0,
-			picture: 'hello',
+			money: 0,
+			pictureUrl: 'hello',
 			description: 'description',
 			createdAt: new Date(),
 			updatedAt: new Date()
