@@ -49,8 +49,6 @@ router.get('/:id/projects', passport.authenticate('jwt', { session: false }), as
 		const userProjects = await ctx.db.User.findByPk(ctx.params.id, {
 			include: [ctx.db.Project]
 		});
-		console.log(userProjects);
-
 		if (userProjects.length === 0) {
 			throw new Error(`User with id: ${ctx.params.id} has no projects`);
 		} else {
