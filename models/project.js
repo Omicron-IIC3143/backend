@@ -12,6 +12,13 @@ module.exports = (sequelize, DataTypes) => {
 		// eslint-disable-next-line no-unused-vars
 		static associate(models) {
 			// define association here
+			Project.belongsTo(models.User, {
+				foreignKey: 'userId',
+				onDelete: 'CASCADE'
+			});
+			Project.hasOne(models.Reports, {
+				foreignKey: 'projectId',
+			});
 		}
 	}
 	Project.init({

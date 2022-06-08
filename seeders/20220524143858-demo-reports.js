@@ -4,6 +4,7 @@
 module.exports = {
 	async up (queryInterface, Sequelize) {
 		return queryInterface.bulkInsert('Reports', [{
+			id: 1,
 			title: 'teleton esta de pana',
 			description: 'Esta es la descripcion del reporte Teleton',
 			pictureUrl: 'foto del reporte teleton',
@@ -12,6 +13,7 @@ module.exports = {
 			updatedAt: new Date()
 		},
 		{
+			id: 2,
 			title: 'colecta esta de pana',
 			description: 'Esta es la descripcion del reporte colecta',
 			pictureUrl: 'foto del reporte colecta',
