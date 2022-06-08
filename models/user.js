@@ -13,6 +13,9 @@ module.exports = (sequelize, DataTypes) => {
 		// eslint-disable-next-line no-unused-vars
 		static associate(models) {
 			// define association here
+			User.hasMany(models.Project, {
+				foreignKey: 'userId',
+			});
 		}
 	}
 	User.init({

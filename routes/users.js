@@ -46,8 +46,9 @@ router.get('/:id', passport.authenticate('jwt', { session: false }), async (ctx,
 // Get user projects by id
 router.get('/:id/projects', passport.authenticate('jwt', { session: false }), async (ctx, next) => {
 	try{
-		let userProjects = await ctx.db.Project.findAll({where: {userId: ctx.params.id}});
-
+		const userProjects = await ctx.db.User.findByPk(ctx.params.id, {
+			include: [ctx.db.Project]
+		});
 		if (userProjects.length === 0) {
 			throw new Error(`User with id: ${ctx.params.id} has no projects`);
 		} else {
