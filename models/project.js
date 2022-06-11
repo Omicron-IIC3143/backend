@@ -14,9 +14,11 @@ module.exports = (sequelize, DataTypes) => {
 			// define association here
 			Project.belongsTo(models.User, {
 				foreignKey: 'userId',
-				onDelete: 'CASCADE'
 			});
 			Project.hasOne(models.Reports, {
+				foreignKey: 'projectId',
+			});
+			Project.hasMany(models.Founding, {
 				foreignKey: 'projectId',
 			});
 		}

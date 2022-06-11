@@ -2,18 +2,18 @@ const Router = require('koa-router');
 const passport = require('koa-passport');
 
 const router = new Router({
-	prefix: '/projects'
+	prefix: '/finance'
 });
 
 
-//Get All Projects
+//Get All Finances
 router.get('/',passport.authenticate('jwt', { session: false }), async (ctx, next) => {
 	try {
-		const projects = await ctx.db.Project.findAll();
-		if (projects.length === 0){
-			throw new Error('We couldn\'t find any projects');
+		const finances = await ctx.db.Founding.findAll();
+		if (finances.length === 0){
+			throw new Error('We couldn\'t find any finances');
 		} else {
-			ctx.body = projects;
+			ctx.body = finances;
 			next();
 		}
 	} catch (ValidationError) {
@@ -22,15 +22,15 @@ router.get('/',passport.authenticate('jwt', { session: false }), async (ctx, nex
 });
 
 
-//Get project by id
+//Get finance by id
 router.get('/:id', passport.authenticate('jwt', { session: false }), async (ctx, next) => {
 	try {
-		let getCurrentProject = await ctx.db.Project.findAll({where: {id: ctx.params.id}});
+		let getCurrentFinance = await ctx.db.Founding.findAll({where: {id: ctx.params.id}});
 
-		if (getCurrentProject.length === 0) {
-			throw new Error(`There's no project under id: ${ctx.params.id}`);
+		if (getCurrentFinance.length === 0) {
+			throw new Error(`There's no finance under id: ${ctx.params.id}`);
 		} else {
-			ctx.body = getCurrentProject[0];
+			ctx.body = getCurrentFinance[0];
 			next();
 		}
 	} catch (ValidationError) {
@@ -39,20 +39,24 @@ router.get('/:id', passport.authenticate('jwt', { session: false }), async (ctx,
 });
 
 
-// Post new project
+// Post new Finance
 router.post('/new', passport.authenticate('jwt', { session: false }), async (ctx) => {
 	try {
 		let user = await ctx.db.User.findAll({where: {id: ctx.request.body.userId}});
+		let project = await ctx.db.Project.findAll({where: {id: ctx.request.body.projectId}});
 		if (user.length === 0){
-			throw new Error(`There's no user under the id: ${ctx.request.body.userId}, to manage this project use another userId`);
+			throw new Error(`There's no user under the id: ${ctx.request.body.userId}, to make the donation use another id`);
 		}
-		const new_project = await ctx.db.Project.build(ctx.request.body);
-		await new_project.save();
-		ctx.body = new_project;
+		if (project.length === 0){
+			throw new Error(`There's no project under the id: ${ctx.request.body.userId}, use a created project to finance`);
+		}
+		const new_finance = await ctx.db.Founding.build(ctx.request.body);
+		await new_finance.save();
+		ctx.body = new_finance;
 		ctx.response.status = 201;
-		ctx.body = 'New project added:';
+		ctx.body = 'New finance added:';
 	} catch (ValidationError) {
-		ctx.throw(400, `Couldn't add the new project: ${ValidationError}`);
+		ctx.throw(400, `Couldn't add the new transaction: ${ValidationError}`);
 	}
 });
 
@@ -60,12 +64,13 @@ router.post('/new', passport.authenticate('jwt', { session: false }), async (ctx
 // Delete project by id
 router.delete('/delete/:id', passport.authenticate('jwt', { session: false }), async (ctx) => {
 	try {
-		const updated = await ctx.db.Project.update({currentState: 'deleted'}, {where: {id: ctx.params.id}});
-		if (updated > 0) {
+		const deleted = await ctx.db.Founding.destroy({where: {id: ctx.params.id}});
+		
+		if (deleted > 0) {
 			ctx.response.status = 200;
-			ctx.body = `Project ${ctx.params.id} deleted`;
+			ctx.body = `finance ${ctx.params.id} deleted`;
 		} else {
-			throw new Error('Project not found');
+			throw new Error('finance not found');
 		}
 	} catch (ValidationError) {
 		ctx.throw(400, `${ValidationError}`);
@@ -77,11 +82,11 @@ router.delete('/delete/:id', passport.authenticate('jwt', { session: false }), a
 router.put('/:id', passport.authenticate('jwt', { session: false }), async (ctx) => {
 	try {
 		var data = ctx.request.body;
-		const update = await ctx.db.Project.update(data, {where: {id: ctx.params.id}});
+		const update = await ctx.db.Founding.update(data, {where: {id: ctx.params.id}});
 		
 		if (update > 0) {
 			ctx.response.status = 200;
-			ctx.body = 'Project updated';
+			ctx.body = 'Finance updated';
 		} else {
 			throw new Error('Something is wrong check the parameters');
 		}

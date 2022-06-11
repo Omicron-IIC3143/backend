@@ -31,10 +31,14 @@ router.get('/', passport.authenticate('jwt', { session: false }), async (ctx, ne
 router.get('/:id', passport.authenticate('jwt', { session: false }), async (ctx, next) => {
 	try{
 		let user = await ctx.db.User.findAll({where: {id: ctx.params.id}});
-
 		if (user.length === 0) {
 			throw new Error(`There's no user under id: ${ctx.params.id}`);
 		} else {
+			// const userData = await ctx.db.User.findByPk(ctx.params.id, {
+			// 	include: [ctx.db.Project, ctx.db.Founding]
+			// });
+			// console.log(userData.Projects);
+			// console.log(userData.Foundings);
 			ctx.body = user[0];
 			next();
 		}
@@ -118,15 +122,41 @@ router.post('/login', async (ctx) => {
 // Delete a user by id
 router.delete('/delete/:id', passport.authenticate('jwt', { session: false }), async (ctx) => {
 	try {
-		const deleted = await ctx.db.User.destroy({where: {id: ctx.params.id}});
-		if (deleted > 0) {
-			ctx.response.status = 200;
-			ctx.body = `User ${ctx.params.id} deleted`;
-		} else {
+		let old = await ctx.db.User.findOne({where: {id: ctx.params.id}});
+		if (old){
+			let user = await ctx.db.User.findOne({where: {email: 'deleted@uc.cl'}});
+			let projects = await ctx.db.Project.findAll({where: {userId: ctx.params.id}});
+			let finances = await ctx.db.Founding.findAll({where: {userId: ctx.params.id}});
+			projects.map(async (proj) => {
+				return await ctx.db.Project.update({userId: user.dataValues.id, currentState: 'deleted'}, {where: {id: proj.dataValues.id}});
+			});
+			finances.map(async (fin) => {
+				return await ctx.db.Founding.update({userId: user.dataValues.id}, {where: {id: fin.dataValues.id}});
+			});
+			try {
+				await ctx.db.User.destroy({where: {id: ctx.params.id}});
+			} finally {
+				let deleted = await ctx.db.User.destroy({where: {id: ctx.params.id}});
+				if (deleted > 0) {
+					ctx.response.status = 200;
+					ctx.body = `User ${ctx.params.id} deleted`;
+				}
+			}
+		}else {
 			throw new Error('User not found');
 		}
 	} catch (ValidationError) {
-		ctx.throw(400, `${ValidationError}`);
+		console.log(ValidationError.message);
+		let old = await ctx.db.User.findOne({where: {id: ctx.params.id}});
+		if (old){
+			ctx.throw(400, ValidationError);
+		}else{
+			if (ValidationError.message === 'User not found'){
+				ctx.throw(400, ValidationError);
+			}else{
+				ctx.throw(200, `User ${ctx.params.id} deleted`);
+			}
+		}
 	}
 });
 
