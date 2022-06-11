@@ -6,14 +6,14 @@ const router = new Router({
 });
 
 
-//Get All Finances
+//Get All foundings
 router.get('/',passport.authenticate('jwt', { session: false }), async (ctx, next) => {
 	try {
-		const finances = await ctx.db.Founding.findAll();
-		if (finances.length === 0){
+		const foundings = await ctx.db.Founding.findAll();
+		if (foundings.length === 0){
 			throw new Error('We couldn\'t find any finances');
 		} else {
-			ctx.body = finances;
+			ctx.body = foundings;
 			next();
 		}
 	} catch (ValidationError) {
@@ -22,7 +22,7 @@ router.get('/',passport.authenticate('jwt', { session: false }), async (ctx, nex
 });
 
 
-//Get finance by id
+//Get founding by id
 router.get('/:id', passport.authenticate('jwt', { session: false }), async (ctx, next) => {
 	try {
 		let getCurrentFinance = await ctx.db.Founding.findAll({where: {id: ctx.params.id}});
@@ -39,7 +39,7 @@ router.get('/:id', passport.authenticate('jwt', { session: false }), async (ctx,
 });
 
 
-// Post new Finance
+// Post new founding
 router.post('/new', passport.authenticate('jwt', { session: false }), async (ctx) => {
 	try {
 		let user = await ctx.db.User.findAll({where: {id: ctx.request.body.userId}});
@@ -61,7 +61,7 @@ router.post('/new', passport.authenticate('jwt', { session: false }), async (ctx
 });
 
 
-// Delete project by id
+// Delete founding by id
 router.delete('/delete/:id', passport.authenticate('jwt', { session: false }), async (ctx) => {
 	try {
 		const deleted = await ctx.db.Founding.destroy({where: {id: ctx.params.id}});
@@ -78,7 +78,7 @@ router.delete('/delete/:id', passport.authenticate('jwt', { session: false }), a
 });
 
 
-// Update project by id
+// Update founding by id
 router.put('/:id', passport.authenticate('jwt', { session: false }), async (ctx) => {
 	try {
 		var data = ctx.request.body;

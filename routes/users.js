@@ -34,11 +34,6 @@ router.get('/:id', passport.authenticate('jwt', { session: false }), async (ctx,
 		if (user.length === 0) {
 			throw new Error(`There's no user under id: ${ctx.params.id}`);
 		} else {
-			// const userData = await ctx.db.User.findByPk(ctx.params.id, {
-			// 	include: [ctx.db.Project, ctx.db.Founding]
-			// });
-			// console.log(userData.Projects);
-			// console.log(userData.Foundings);
 			ctx.body = user[0];
 			next();
 		}
@@ -126,11 +121,11 @@ router.delete('/delete/:id', passport.authenticate('jwt', { session: false }), a
 		if (old){
 			let user = await ctx.db.User.findOne({where: {email: 'deleted@uc.cl'}});
 			let projects = await ctx.db.Project.findAll({where: {userId: ctx.params.id}});
-			let finances = await ctx.db.Founding.findAll({where: {userId: ctx.params.id}});
+			let foundings = await ctx.db.Founding.findAll({where: {userId: ctx.params.id}});
 			projects.map(async (proj) => {
 				return await ctx.db.Project.update({userId: user.dataValues.id, currentState: 'deleted'}, {where: {id: proj.dataValues.id}});
 			});
-			finances.map(async (fin) => {
+			foundings.map(async (fin) => {
 				return await ctx.db.Founding.update({userId: user.dataValues.id}, {where: {id: fin.dataValues.id}});
 			});
 			try {
