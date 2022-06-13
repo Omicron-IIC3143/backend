@@ -45,13 +45,13 @@ let index = require('./routes/index');
 let projects = require('./routes/projects');
 let user = require('./routes/users');
 let report = require('./routes/reports');
-let foundings = require('./routes/foundings');
+let fundings = require('./routes/fundings');
 
 //use the router here
 app.use(index.routes());
 app.use(projects.routes());
 app.use(user.routes());
 app.use(report.routes());
-app.use(foundings.routes());
+app.use(fundings.routes());
 
 module.exports = app;

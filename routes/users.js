@@ -121,12 +121,12 @@ router.delete('/delete/:id', passport.authenticate('jwt', { session: false }), a
 		if (old){
 			let user = await ctx.db.User.findOne({where: {email: 'deleted@uc.cl'}});
 			let projects = await ctx.db.Project.findAll({where: {userId: ctx.params.id}});
-			let foundings = await ctx.db.Founding.findAll({where: {userId: ctx.params.id}});
+			let fundings = await ctx.db.Funding.findAll({where: {userId: ctx.params.id}});
 			projects.map(async (proj) => {
 				return await ctx.db.Project.update({userId: user.dataValues.id, currentState: 'deleted'}, {where: {id: proj.dataValues.id}});
 			});
-			foundings.map(async (fin) => {
-				return await ctx.db.Founding.update({userId: user.dataValues.id}, {where: {id: fin.dataValues.id}});
+			fundings.map(async (fin) => {
+				return await ctx.db.Funding.update({userId: user.dataValues.id}, {where: {id: fin.dataValues.id}});
 			});
 			try {
 				await ctx.db.User.destroy({where: {id: ctx.params.id}});

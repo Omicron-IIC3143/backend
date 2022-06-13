@@ -15,7 +15,7 @@ module.exports = (sequelize, DataTypes) => {
 			User.hasMany(models.Project, {
 				foreignKey: 'userId',
 			});
-			User.hasMany(models.Founding, {
+			User.hasMany(models.Funding, {
 				foreignKey: 'userId',
 			});
 		}

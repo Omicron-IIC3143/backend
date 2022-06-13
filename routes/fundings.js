@@ -6,14 +6,14 @@ const router = new Router({
 });
 
 
-//Get All foundings
+//Get All fundings
 router.get('/',passport.authenticate('jwt', { session: false }), async (ctx, next) => {
 	try {
-		const foundings = await ctx.db.Founding.findAll();
-		if (foundings.length === 0){
+		const fundings = await ctx.db.Funding.findAll();
+		if (fundings.length === 0){
 			throw new Error('We couldn\'t find any finances');
 		} else {
-			ctx.body = foundings;
+			ctx.body = fundings;
 			next();
 		}
 	} catch (ValidationError) {
@@ -22,10 +22,10 @@ router.get('/',passport.authenticate('jwt', { session: false }), async (ctx, nex
 });
 
 
-//Get founding by id
+//Get funding by id
 router.get('/:id', passport.authenticate('jwt', { session: false }), async (ctx, next) => {
 	try {
-		let getCurrentFinance = await ctx.db.Founding.findAll({where: {id: ctx.params.id}});
+		let getCurrentFinance = await ctx.db.Funding.findAll({where: {id: ctx.params.id}});
 
 		if (getCurrentFinance.length === 0) {
 			throw new Error(`There's no finance under id: ${ctx.params.id}`);
@@ -39,7 +39,7 @@ router.get('/:id', passport.authenticate('jwt', { session: false }), async (ctx,
 });
 
 
-// Post new founding
+// Post new funding
 router.post('/new', passport.authenticate('jwt', { session: false }), async (ctx) => {
 	try {
 		let user = await ctx.db.User.findAll({where: {id: ctx.request.body.userId}});
@@ -50,7 +50,7 @@ router.post('/new', passport.authenticate('jwt', { session: false }), async (ctx
 		if (project.length === 0){
 			throw new Error(`There's no project under the id: ${ctx.request.body.userId}, use a created project to finance`);
 		}
-		const new_finance = await ctx.db.Founding.build(ctx.request.body);
+		const new_finance = await ctx.db.Funding.build(ctx.request.body);
 		await new_finance.save();
 		ctx.body = new_finance;
 		ctx.response.status = 201;
@@ -61,10 +61,10 @@ router.post('/new', passport.authenticate('jwt', { session: false }), async (ctx
 });
 
 
-// Delete founding by id
+// Delete funding by id
 router.delete('/delete/:id', passport.authenticate('jwt', { session: false }), async (ctx) => {
 	try {
-		const deleted = await ctx.db.Founding.destroy({where: {id: ctx.params.id}});
+		const deleted = await ctx.db.Funding.destroy({where: {id: ctx.params.id}});
 		
 		if (deleted > 0) {
 			ctx.response.status = 200;
@@ -78,11 +78,11 @@ router.delete('/delete/:id', passport.authenticate('jwt', { session: false }), a
 });
 
 
-// Update founding by id
+// Update funding by id
 router.put('/:id', passport.authenticate('jwt', { session: false }), async (ctx) => {
 	try {
 		var data = ctx.request.body;
-		const update = await ctx.db.Founding.update(data, {where: {id: ctx.params.id}});
+		const update = await ctx.db.Funding.update(data, {where: {id: ctx.params.id}});
 		
 		if (update > 0) {
 			ctx.response.status = 200;

@@ -18,7 +18,7 @@ module.exports = (sequelize, DataTypes) => {
 			Project.hasOne(models.Reports, {
 				foreignKey: 'projectId',
 			});
-			Project.hasMany(models.Founding, {
+			Project.hasMany(models.Funding, {
 				foreignKey: 'projectId',
 			});
 		}

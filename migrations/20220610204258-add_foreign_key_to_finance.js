@@ -3,19 +3,19 @@
 
 module.exports = {
 	async up (queryInterface, Sequelize) {
-		await queryInterface.addConstraint('Foundings', {
+		await queryInterface.addConstraint('Fundings', {
 			fields: ['userId'],
 			type: 'foreign key',
-			name: 'user-foundings_fk_relation',
+			name: 'user-fundings_fk_relation',
 			references: { //Required field
 				table: 'Users',
 				field: 'id'
 			}
 		});
-		await queryInterface.addConstraint('Foundings', {
+		await queryInterface.addConstraint('Fundings', {
 			fields: ['projectId'],
 			type: 'foreign key',
-			name: 'project-foundings_fk_relation',
+			name: 'project-fundings_fk_relation',
 			references: { //Required field
 				table: 'Projects',
 				field: 'id'
@@ -24,7 +24,7 @@ module.exports = {
 	},
 
 	async down (queryInterface, Sequelize) {
-		await queryInterface.removeConstraint('Foundings', 'project-foundings_fk_relation');
-		await queryInterface.removeConstraint('Foundings', 'user-foundings_fk_relation');
+		await queryInterface.removeConstraint('Fundings', 'project-fundings_fk_relation');
+		await queryInterface.removeConstraint('Fundings', 'user-fundings_fk_relation');
 	}
 };
