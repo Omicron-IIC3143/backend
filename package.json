@@ -5,7 +5,7 @@
     "main": "server.js",
     "scripts": {
         "dev": "nodemon -L server.js",
-        "test": "jest --runInBand",
+        "test": "jest --runInBand --silent",
         "lint": "eslint ./",
         "lint-fix": "eslint ./ --fix"
     },

@@ -16,5 +16,10 @@ To run:
 
 To test:
 
-- docker-compose exec web npm run test
+- without logs:
+  - docker-compose exec web npm run test
+- with logs:
+  - docker-compose exec web npx jest --runInBand
+
+
 
