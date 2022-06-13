@@ -2,7 +2,6 @@
 module.exports = {
 	up: (queryInterface, Sequelize) => {
 		return queryInterface.bulkInsert('Projects', [{
-			id: 1,
 			name: 'Teleton',
 			description: 'Esta es la descripcion del proyecto Teleton',
 			pictureUrl: 'foto de teleton',
@@ -16,10 +15,9 @@ module.exports = {
 			tags: 'tag-1,tag-2',
 			createdAt: new Date(),
 			updatedAt: new Date(),
-			userId: 1,
+			userId: 2,
 		},
 		{
-			id: 2,
 			name: 'Colecta Social',
 			description: 'Esta es la descripcion del proyecto de Colecta Social',
 			pictureUrl: 'foto de colecta social',
@@ -33,10 +31,9 @@ module.exports = {
 			tags: 'tag-1,tag-2,tag-3',
 			createdAt: new Date(),
 			updatedAt: new Date(),
-			userId: 1,
+			userId: 2,
 		},
 		{
-			id: 3,
 			name: 'Un Techo para Chile',
 			description: 'Esta es la descripcion del proyecto Un Techo para Chile',
 			pictureUrl: 'foto de un techo para chile',
@@ -50,7 +47,7 @@ module.exports = {
 			tags: 'tag-1',
 			createdAt: new Date(),
 			updatedAt: new Date(),
-			userId: 2,
+			userId: 3,
 		},]);
 	},
 	down: (queryInterface, Sequelize) => {

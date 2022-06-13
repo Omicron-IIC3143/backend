@@ -83,6 +83,7 @@ router.post('/register', async (ctx) => {
 			ctx.body = {user, token};
 		}
 	} catch (ValidationError) {
+		console.log(ValidationError);
 		ctx.throw(400, 'Couldn\'t add the new user');
 	}
 });
@@ -122,20 +123,27 @@ router.delete('/delete/:id', passport.authenticate('jwt', { session: false }), a
 			let user = await ctx.db.User.findOne({where: {email: 'deleted@uc.cl'}});
 			let projects = await ctx.db.Project.findAll({where: {userId: ctx.params.id}});
 			let fundings = await ctx.db.Funding.findAll({where: {userId: ctx.params.id}});
-			projects.map(async (proj) => {
-				return await ctx.db.Project.update({userId: user.dataValues.id, currentState: 'deleted'}, {where: {id: proj.dataValues.id}});
-			});
-			fundings.map(async (fin) => {
-				return await ctx.db.Funding.update({userId: user.dataValues.id}, {where: {id: fin.dataValues.id}});
-			});
-			try {
-				await ctx.db.User.destroy({where: {id: ctx.params.id}});
-			} finally {
+
+			if (projects.length > 0) {
+				projects.map(async (proj) => {
+					return await ctx.db.Project.update({userId: user.dataValues.id, currentState: 'deleted'}, {where: {id: proj.dataValues.id}});
+				});
+			}
+
+			if (fundings.length > 0) {
+				fundings.map(async (fin) => {
+					return await ctx.db.Funding.update({userId: user.dataValues.id}, {where: {id: fin.dataValues.id}});
+				});
+			}
+			
+			try {				
 				let deleted = await ctx.db.User.destroy({where: {id: ctx.params.id}});
 				if (deleted > 0) {
 					ctx.response.status = 200;
 					ctx.body = `User ${ctx.params.id} deleted`;
 				}
+			} finally {
+				await ctx.db.User.destroy({where: {id: ctx.params.id}});
 			}
 		}else {
 			throw new Error('User not found');
@@ -149,6 +157,7 @@ router.delete('/delete/:id', passport.authenticate('jwt', { session: false }), a
 			if (ValidationError.message === 'User not found'){
 				ctx.throw(400, ValidationError);
 			}else{
+				console.log('desde catch');
 				ctx.throw(200, `User ${ctx.params.id} deleted`);
 			}
 		}
