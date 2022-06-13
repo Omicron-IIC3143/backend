@@ -53,7 +53,7 @@ describe('Users Test Suite', function() {
 			} else if (seedUser == 3) {
 				expect(seedUser.name).toBe('vicho');
 			}
-		})
+		});
 	});
 	test('get user by id', async () => {
 		// Setup for this test specifically.
@@ -83,7 +83,7 @@ describe('Users Test Suite', function() {
 			} else if (userProject.id == 2) {
 				expect(userProject.name).toBe('Colecta Social');
 			}
-		})
+		});
 	});
 	test('user login', async () => {
 		// Setup for this test specifically.
