@@ -60,9 +60,8 @@ router.post('/new', passport.authenticate('jwt', { session: false }), async (ctx
 // Delete project by id
 router.delete('/delete/:id', passport.authenticate('jwt', { session: false }), async (ctx) => {
 	try {
-		const deleted = await ctx.db.Project.destroy({where: {id: ctx.params.id}});
-		
-		if (deleted > 0) {
+		const updated = await ctx.db.Project.update({currentState: 'deleted'}, {where: {id: ctx.params.id}});
+		if (updated > 0) {
 			ctx.response.status = 200;
 			ctx.body = `Project ${ctx.params.id} deleted`;
 		} else {
