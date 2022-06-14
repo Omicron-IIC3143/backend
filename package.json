@@ -6,6 +6,7 @@
     "scripts": {
         "dev": "nodemon -L server.js",
         "test": "jest --runInBand --silent",
+        "coverage": "jest --runInBand --silent --coverage",
         "lint": "eslint ./",
         "lint-fix": "eslint ./ --fix"
     },

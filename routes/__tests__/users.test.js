@@ -47,7 +47,7 @@ describe('Users Test Suite', function() {
 				expect(seedUser.name).toBe('Deleted_user');
 			} else if (seedUser.id == 2) {
 				expect(seedUser.name).toBe('vicho');
-			} else if (seedUser == 3) {
+			} else if (seedUser.id == 3) {
 				expect(seedUser.name).toBe('anto');
 			}
 		});
