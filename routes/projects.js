@@ -7,7 +7,7 @@ const router = new Router({
 
 
 //Get All Projects
-router.get('/',passport.authenticate('jwt', { session: false }), async (ctx, next) => {
+router.get('/', async (ctx, next) => {
 	try {
 		const projects = await ctx.db.Project.findAll();
 		if (projects.length === 0){
@@ -23,7 +23,7 @@ router.get('/',passport.authenticate('jwt', { session: false }), async (ctx, nex
 
 
 //Get project by id
-router.get('/:id', passport.authenticate('jwt', { session: false }), async (ctx, next) => {
+router.get('/:id', async (ctx, next) => {
 	try {
 		let getCurrentProject = await ctx.db.Project.findAll({where: {id: ctx.params.id}});
 

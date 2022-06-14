@@ -56,10 +56,6 @@ module.exports = (sequelize, DataTypes) => {
 			type: DataTypes.STRING,
 			defaultValue: 'pending',
 		},
-		deadlineTime: {
-			type: DataTypes.INTEGER,
-			allowNull: false,
-		},
 		date: {
 			type: DataTypes.DATE,
 			allowNull: false,
