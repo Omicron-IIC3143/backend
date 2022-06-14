@@ -1,13 +1,10 @@
 /* eslint-disable no-undef */
 const supertest = require('supertest');
-// const db = require('../../models');
 const app = require('../../app');
 
 const request = supertest(app.callback());
 
 const baseUrl = '/users';
-
-// .set('Authorization', `Bearer ${}`);
 
 describe('Users Test Suite', function() {
 	const user = {
@@ -51,7 +48,7 @@ describe('Users Test Suite', function() {
 			} else if (seedUser.id == 2) {
 				expect(seedUser.name).toBe('vicho');
 			} else if (seedUser == 3) {
-				expect(seedUser.name).toBe('vicho');
+				expect(seedUser.name).toBe('anto');
 			}
 		});
 	});
