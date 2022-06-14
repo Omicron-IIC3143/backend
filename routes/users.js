@@ -48,14 +48,18 @@ router.get('/:id/projects', passport.authenticate('jwt', { session: false }), as
 		const userProjects = await ctx.db.User.findByPk(ctx.params.id, {
 			include: [ctx.db.Project]
 		});
-		if (userProjects.length === 0) {
-			throw new Error(`User with id: ${ctx.params.id} has no projects`);
+		if (!userProjects) {
+			throw new Error(`User with id: ${ctx.params.id} does not exist`);
 		} else {
-			ctx.body = userProjects;
-			next();
+			if (userProjects.Projects.length) {
+				ctx.body = userProjects.Projects;
+				next();
+			} else {
+				throw new Error(`User with id: ${ctx.params.id} has no projects`);
+			}
 		}
 	}catch (ValidationError) {
-		ctx.throw(404, `${ValidationError}`);
+		ctx.throw(400, `${ValidationError}`);
 	}
 });
 
