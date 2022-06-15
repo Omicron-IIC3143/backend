@@ -54,7 +54,7 @@ router.post('/new', passport.authenticate('jwt', { session: false }), async (ctx
 		await new_finance.save();
 		ctx.body = new_finance;
 		ctx.response.status = 201;
-		ctx.body = 'New finance added:';
+		ctx.message = 'New finance added';
 	} catch (ValidationError) {
 		ctx.throw(400, `Couldn't add the new transaction: ${ValidationError}`);
 	}
@@ -68,9 +68,9 @@ router.delete('/delete/:id', passport.authenticate('jwt', { session: false }), a
 		
 		if (deleted > 0) {
 			ctx.response.status = 200;
-			ctx.body = `finance ${ctx.params.id} deleted`;
+			ctx.body = `Finance ${ctx.params.id} deleted`;
 		} else {
-			throw new Error('finance not found');
+			throw new Error('Finance not found');
 		}
 	} catch (ValidationError) {
 		ctx.throw(400, `${ValidationError}`);

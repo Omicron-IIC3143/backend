@@ -70,7 +70,7 @@ describe('Users Test Suite', function() {
 			.set('Content-type', 'application/json')
 			.set('Authorization', `Bearer ${jwt}`);
 
-		const userProjects = response.body.Projects;
+		const userProjects = response.body;
 
 		// Test
 		expect(response.status).toBe(200);

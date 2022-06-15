@@ -48,7 +48,7 @@ router.post('/new', passport.authenticate('jwt', { session: false }), async (ctx
 			await new_report.save();
 			ctx.body = new_report;
 			ctx.response.status = 201;
-			ctx.body = 'New report added';
+			ctx.message = 'New report added';
 		} else {
 			throw new Error('Couldn\'t add the new report');
 		}
