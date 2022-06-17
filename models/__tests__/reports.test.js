@@ -2,21 +2,21 @@
 const app = require('../../app');
 
 describe('Report Model Test Suite', function() {
-  let reportId;
+	let reportId;
 	test('create report', async () => {
 		// Setup for this test specifically.
 		const reportBody = {
-      title: 'testing report',
+			title: 'testing report',
 			description: 'testing report description',
 			pictureUrl: 'testing picture url',
 			projectId: 1,
 			createdAt: new Date(),
 		};
 		const testReport = await app.context.db.Reports.create(reportBody);
-    reportId = testReport.id;
+		reportId = testReport.id;
 		const dbReport = await app.context.db.Reports.findOne({
 			 where: { 
-					id: reportId,
+				id: reportId,
 			  },
 		});
 		expect(dbReport.title).toEqual(reportBody.title);
@@ -25,7 +25,7 @@ describe('Report Model Test Suite', function() {
 		expect(dbReport.projectId).toEqual(reportBody.projectId);
 		expect(dbReport.createdAt).toEqual(reportBody.createdAt);
 	});
-  test('delete report', async () => {
+	test('delete report', async () => {
 		// Setup for this test specifically.
 		await app.context.db.Reports.destroy({ 
 			where: {

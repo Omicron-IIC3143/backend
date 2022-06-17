@@ -27,7 +27,7 @@ describe('User Model Test Suite', function() {
 		userId = testUser.id;
 		const dbUser = await app.context.db.User.findOne({
 			 where: { 
-					id: userId,
+				id: userId,
 			  },
 		});
 		expect(dbUser.name).toEqual(userBody.name);
