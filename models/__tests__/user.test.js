@@ -26,9 +26,9 @@ describe('User Model Test Suite', function() {
 		const testUser = await app.context.db.User.create(userBody);
 		userId = testUser.id;
 		const dbUser = await app.context.db.User.findOne({
-			 where: { 
-					id: userId,
-			  },
+			where: { 
+				id: userId,
+			},
 		});
 		expect(dbUser.name).toEqual(userBody.name);
 		expect(dbUser.rut).toEqual(userBody.rut);
@@ -46,12 +46,12 @@ describe('User Model Test Suite', function() {
 			where: {
 				id: userId,
 			}
-		 });
+		});
 		const deletedUser = await app.context.db.User.findOne({
 			where: { 
-				 id: userId,
-			 },
-	 	});
+				id: userId,
+			},
+		});
 		expect(deletedUser).toBeNull();
 	});
 });
