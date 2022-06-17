@@ -15,15 +15,9 @@ describe('Report Model Test Suite', function() {
 		const testReport = await app.context.db.Reports.create(reportBody);
 		reportId = testReport.id;
 		const dbReport = await app.context.db.Reports.findOne({
-<<<<<<< HEAD
 			where: { 
 				id: reportId,
 			},
-=======
-			 where: { 
-				id: reportId,
-			  },
->>>>>>> 3fce6038d4135d16f45e5a6062a5f610c15a40aa
 		});
 		expect(dbReport.title).toEqual(reportBody.title);
 		expect(dbReport.description).toEqual(reportBody.description);

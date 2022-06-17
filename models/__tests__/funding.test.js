@@ -14,15 +14,9 @@ describe('Funding Model Test Suite', function() {
 		const testFunding = await app.context.db.Funding.create(fundingBody);
 		fundingId = testFunding.id;
 		const dbFunding = await app.context.db.Funding.findOne({
-<<<<<<< HEAD
 			where: { 
 				id: fundingId,
 			},
-=======
-			 where: { 
-				id: fundingId,
-			  },
->>>>>>> 3fce6038d4135d16f45e5a6062a5f610c15a40aa
 		});
 		expect(dbFunding.userId).toEqual(fundingBody.userId);
 		expect(dbFunding.projectId).toEqual(fundingBody.projectId);

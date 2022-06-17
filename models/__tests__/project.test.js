@@ -22,15 +22,9 @@ describe('Project Model Test Suite', function() {
 		const testProject = await app.context.db.Project.create(projectBody);
 		projectId = testProject.id;
 		const dbProject = await app.context.db.Project.findOne({
-<<<<<<< HEAD
 			where: { 
 				id: projectId,
 			},
-=======
-			 where: { 
-				id: projectId,
-			  },
->>>>>>> 3fce6038d4135d16f45e5a6062a5f610c15a40aa
 		});
 		expect(dbProject.name).toEqual(projectBody.name);
 		expect(dbProject.description).toEqual(projectBody.description);
