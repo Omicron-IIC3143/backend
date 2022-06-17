@@ -26,9 +26,15 @@ describe('User Model Test Suite', function() {
 		const testUser = await app.context.db.User.create(userBody);
 		userId = testUser.id;
 		const dbUser = await app.context.db.User.findOne({
+<<<<<<< HEAD
 			where: { 
 				id: userId,
 			},
+=======
+			 where: { 
+				id: userId,
+			  },
+>>>>>>> 3fce6038d4135d16f45e5a6062a5f610c15a40aa
 		});
 		expect(dbUser.name).toEqual(userBody.name);
 		expect(dbUser.rut).toEqual(userBody.rut);
