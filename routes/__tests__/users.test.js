@@ -135,6 +135,54 @@ describe('Users Test Suite', function() {
 			expect(response.status).toBe(200);
 		});
 	});
+	describe('User Deleting Border Cases', function () {
+		test('delete user with projects and funding', async () => {
+			// Setup
+			const userBody = {
+				name: 'user name testing',
+				rut: 'user rut testing',
+				email:'usertest@test.cl',
+				password: 'test',
+				isAdmin: true,
+				money: 0,
+				pictureUrl: 'test picture url',
+				description: ' test description',
+				createdAt: new Date(),
+			};
+			const user = await app.context.db.User.create(userBody);
+			const token = jwt.sign(userBody, secret, {subject: user.id.toString()});
+			const projectBody = {
+				name: 'testing project name',
+				description: 'testing project description',
+				pictureUrl: 'testing picture url',
+				company: 'testing company',
+				topic: 'testing topic',
+				currentAmount: 1000.0,
+				goalAmount: 54020.0,
+				currentState: 'pending',
+				date: new Date(),
+				tags: 'testing tag',
+				createdAt: new Date(),
+				userId: user.id,
+			};
+			const project = await app.context.db.Project.create(projectBody);
+			const fundingBody = {
+				userId: user.id,
+				projectId: project.id,
+				amount: 100.0,
+				createdAt: new Date(),
+			};
+			await app.context.db.Funding.create(fundingBody);
+
+			// Test
+			const response = await request
+				.delete(`${baseUrl}/delete/${user.id}`)
+				.set('Content-type', 'application/json')
+				.set('Authorization', `Bearer ${token}`);
+
+			expect(response.status).toBe(200);
+		});
+	});
 
 	describe('Errors', function () {
 		const body = {
@@ -143,6 +191,13 @@ describe('Users Test Suite', function() {
 		};
 		const token = jwt.sign(body, secret, {subject: '2'});
 
+		test('get all user - no validation', async () => {
+			const response = await request
+				.get(`${baseUrl}/${id}`)
+				.set('Content-type', 'application/json');
+
+			expect(response.status).toBe(401);
+		});
 		test('get user by id - empty', async () => {
 			const response = await request
 				.get(`${baseUrl}/${id}`)
@@ -151,7 +206,6 @@ describe('Users Test Suite', function() {
 
 			expect(response.status).toBe(404);
 		});
-
 		test('get user projects - no user', async () => {
 			const response = await request
 				.get(`${baseUrl}/${id}/projects`)
@@ -224,7 +278,6 @@ describe('Users Test Suite', function() {
 
 			expect(response.status).toBe(401);
 		});
-
 		test('delete user - no user', async () => {
 			const response = await request
 				.delete(`${baseUrl}/delete/${id}`)
