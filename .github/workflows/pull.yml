@@ -16,17 +16,11 @@ jobs:
       - name: Checkout Code Repository
         uses: actions/checkout@v3
 
-      - name: Build instance
+      - name: Build instance, Migrate, Seeds and Test
         run: docker-compose -f docker-compose.yml build
-
-      - name: Migrations
-        run: docker-compose -f docker-compose.yml run web npx sequelize-cli db:migrate
-
-      - name: Seeds
-        run: docker-compose -f docker-compose.yml run web npx sequelize-cli db:seed:all
-
-      - name: Tests
-        run: docker-compose -f docker-compose.yml run web npm run test
+        run: docker-compose -f docker-compose.yml exec web npx sequelize-cli db:migrate
+        run: docker-compose -f docker-compose.yml exec web npx sequelize-cli db:seed:all
+        run: docker-compose -f docker-compose.yml exec web npm run test
         
       - name: Linter
         run: docker-compose -f docker-compose.yml run --rm web npm run lint
