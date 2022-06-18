@@ -2,16 +2,22 @@ services:
     web:
         build: .
         container_name: my_app_node
-        restart: always
+        command: >
+            sh -c "
+             npx sequelize-cli db:migrate &&
+             npx sequelize-cli db:seed:all &&
+             npm run dev &&
+             npm run test"
         volumes:
             - .:/usr/app/
+            - /usr/app/node_modules
         ports:
             - '8080:8080'
-        command: 'npm run dev'
-        env_file:
-            - ${{secrets.ENV}}
         depends_on:
             - postgres
+        env_file:
+            - ./.env
+        restart: always
 
     postgres:
         image: postgres
