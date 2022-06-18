@@ -119,6 +119,53 @@ describe('Report Test Suite', function() {
 
 			expect(response.status).toBe(400);
 		});
+		test('edit report - no project with id x', async () => {
+			const testEditFunding = {
+				title: 'test report update',
+				description: 'description of test report update',
+				projectId: 0,
+				pictureUrl: 'update test report pictureUrl'
+			};
+
+			const response = await request
+				.put(`${baseUrl}/${testReportId}`)
+				.set('Content-type', 'application/json')
+				.set('Authorization', `Bearer ${token}`)
+				.send(testEditFunding);
+
+			expect(response.status).toBe(400);
+		});
+		test('post report - no project with id x', async () => {
+			const testPostFunding = {
+				title: 'test report update',
+				description: 'description of test report update',
+				projectId: 0,
+				pictureUrl: 'update test report pictureUrl'
+			};
+
+			const response = await request
+				.post(`${baseUrl}/new`)
+				.set('Content-type', 'application/json')
+				.set('Authorization', `Bearer ${token}`)
+				.send(testPostFunding);
+
+			expect(response.status).toBe(400);
+		});
+		test('post report - no project with id x', async () => {
+			const testPostFunding = {
+				title: 'test report update',
+				description: 'description of test report update',
+				projectId: 0,
+				pictureUrl: 'update test report pictureUrl'
+			};
+
+			const response = await request
+				.post(`${baseUrl}/new`)
+				.set('Content-type', 'application/json')
+				.send(testPostFunding);
+
+			expect(response.status).toBe(401);
+		});
 
 		test('get report by id - no report', async () => {
 			const response = await request
@@ -127,6 +174,13 @@ describe('Report Test Suite', function() {
 				.set('Authorization', `Bearer ${token}`);
 
 			expect(response.status).toBe(404);
+		});
+		test('get report by id - no validation', async () => {
+			const response = await request
+				.get(`${baseUrl}/${testReportId}`)
+				.set('Content-type', 'application/json');
+
+			expect(response.status).toBe(401);
 		});
 	});
 

@@ -117,6 +117,51 @@ describe('Projects Test Suite', function() {
 	});
 
 	describe('Errors', function() {
+		test('post project - no user with id x', async () => {
+			const postProject = {
+				name: 'projecto updated',
+				description: 'Esta es la descripcion del proyecto updated',
+				pictureUrl: 'url foto de projecto updated',
+				company: 'new company updated',
+				topic: 'Ayuda social updated',
+				currentAmount: 10,
+				goalAmount: 1010,
+				currentState: 'pending',
+				date: '2022-05-28',
+				tags: 'tag-1',
+				userId: 0,
+			};
+
+			const response = await request
+				.post(`${baseUrl}/new`)
+				.set('Content-type', 'application/json')
+				.set('Authorization', `Bearer ${token}`)
+				.send(postProject);
+
+			expect(response.status).toBe(400);
+		});
+		test('post project - no validation', async () => {
+			const postProject = {
+				name: 'projecto updated',
+				description: 'Esta es la descripcion del proyecto updated',
+				pictureUrl: 'url foto de projecto updated',
+				company: 'new company updated',
+				topic: 'Ayuda social updated',
+				currentAmount: 10,
+				goalAmount: 1010,
+				currentState: 'pending',
+				date: '2022-05-28',
+				tags: 'tag-1',
+				userId: 1,
+			};
+
+			const response = await request
+				.post(`${baseUrl}/new`)
+				.set('Content-type', 'application/json')
+				.send(postProject);
+
+			expect(response.status).toBe(401);
+		});
 		test('delete project - previous step', async () => {
 			await app.context.db.Project.destroy({ 
 				where: {
@@ -124,7 +169,21 @@ describe('Projects Test Suite', function() {
 				}
 			});
 		});
+		test('delete project - no project with id x', async () => {
+			const response = await request
+				.delete(`${baseUrl}/delete/0`)
+				.set('Content-type', 'application/json')
+				.set('Authorization', `Bearer ${token}`);
 
+				expect(response.status).toBe(400);
+		});
+		test('delete project - no validation', async () => {
+			const response = await request
+				.delete(`${baseUrl}/delete/0`)
+				.set('Content-type', 'application/json');
+
+				expect(response.status).toBe(401);
+		});
 		test('update project by id - no project', async () => {
 			const updatedProject = {
 				name: 'projecto updated',
@@ -148,7 +207,6 @@ describe('Projects Test Suite', function() {
 
 			expect(response.status).toBe(400);
 		});
-
 		test('get project by id - no project', async () => {
 			const response = await request
 				.get(`${baseUrl}/${newProjectId}`)

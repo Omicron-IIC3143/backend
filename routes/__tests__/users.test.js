@@ -180,6 +180,23 @@ describe('Users Test Suite', function() {
 			expect(response.status).toBe(403);
 		});
 
+		test('register user - invalid body', async () => {
+			const invalidUser = {
+				name: 'vicho',
+				rut: '123',
+				money: 0,
+				pictureUrl: 'hello',
+				description: 'description'
+			};
+
+			const response = await request
+				.post(`${baseUrl}/register`)
+				.set('Content-type', 'application/json')
+				.send(invalidUser);
+
+			expect(response.status).toBe(400);
+		});
+
 		test('user login - no user', async () => {
 			const loginUser = {
 				email: 'jest_testing@email.com',

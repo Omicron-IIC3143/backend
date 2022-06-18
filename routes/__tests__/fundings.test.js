@@ -95,7 +95,57 @@ describe('Funding Test Suite', function() {
 
 			expect(response.status).toBe(404);
 		});
+		test('get all fundings - no validation', async () => {
+			const response = await request
+				.get(`${baseUrl}/${testFundingId}`)
+				.set('Content-type', 'application/json')
 
+			expect(response.status).toBe(401);
+		});
+		test('post funding - no user with id x', async () => {
+			const testPostFunding = {
+				userId: 0,
+				projectId: 1,
+				amount: 1000.0
+			};
+
+			const response = await request
+				.post(`${baseUrl}/new`)
+				.set('Content-type', 'application/json')
+				.set('Authorization', `Bearer ${token}`)
+				.send(testPostFunding);
+
+			expect(response.status).toBe(400);
+		});
+		test('post funding - no project with id x', async () => {
+			const testPostFunding = {
+				userId: 1,
+				projectId: 0,
+				amount: 1000.0
+			};
+
+			const response = await request
+				.post(`${baseUrl}/new`)
+				.set('Content-type', 'application/json')
+				.set('Authorization', `Bearer ${token}`)
+				.send(testPostFunding);
+
+			expect(response.status).toBe(400);
+		});
+		test('post funding - no validation', async () => {
+			const testPostFunding = {
+				userId: 1,
+				projectId: 0,
+				amount: 1000.0
+			};
+
+			const response = await request
+				.post(`${baseUrl}/new`)
+				.set('Content-type', 'application/json')
+				.send(testPostFunding);
+
+			expect(response.status).toBe(401);
+		});
 		test('delete funding - no funding', async () => {
 			const response = await request
 				.delete(`${baseUrl}/delete/${testFundingId}`)
@@ -104,7 +154,6 @@ describe('Funding Test Suite', function() {
 
 			expect(response.status).toBe(400);
 		});
-
 		test('edit funding - no funding', async () => {
 			const testEditFunding = {
 				amount: 150.0
