@@ -98,7 +98,7 @@ describe('Funding Test Suite', function() {
 		test('get all fundings - no validation', async () => {
 			const response = await request
 				.get(`${baseUrl}/${testFundingId}`)
-				.set('Content-type', 'application/json')
+				.set('Content-type', 'application/json');
 
 			expect(response.status).toBe(401);
 		});

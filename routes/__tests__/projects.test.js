@@ -175,14 +175,14 @@ describe('Projects Test Suite', function() {
 				.set('Content-type', 'application/json')
 				.set('Authorization', `Bearer ${token}`);
 
-				expect(response.status).toBe(400);
+			expect(response.status).toBe(400);
 		});
 		test('delete project - no validation', async () => {
 			const response = await request
 				.delete(`${baseUrl}/delete/0`)
 				.set('Content-type', 'application/json');
 
-				expect(response.status).toBe(401);
+			expect(response.status).toBe(401);
 		});
 		test('update project by id - no project', async () => {
 			const updatedProject = {
