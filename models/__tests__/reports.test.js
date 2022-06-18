@@ -3,8 +3,8 @@ const app = require('../../app');
 
 describe('Report Model Test Suite', function() {
 	let reportId;
+
 	test('create report', async () => {
-		// Setup for this test specifically.
 		const reportBody = {
 			title: 'testing report',
 			description: 'testing report description',
