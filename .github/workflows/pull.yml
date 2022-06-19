@@ -22,8 +22,6 @@ jobs:
       - name: Tests
         run: |
           docker-compose -f docker-compose.yml up -d --build
-          docker-compose -f docker-compose.yml exec web npx sequelize-cli db:migrate
-          docker-compose -f docker-compose.yml exec web npx sequelize-cli db:seed:all
           docker-compose -f docker-compose.yml exec web npm run test
         
       - name: Linter

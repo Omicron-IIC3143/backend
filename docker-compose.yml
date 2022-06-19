@@ -1,6 +1,8 @@
 services:
     web:
-        build: .
+        build:
+            context: .
+            dockerfile: ./docker/production/Dockerfile
         container_name: my_app_node
         command: 'npm run dev'
         volumes:

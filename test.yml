@@ -1,12 +1,9 @@
 services:
     web:
-        build: .
+        build:
+            context: .
+            dockerfile: ./docker/test/Dockerfile
         container_name: my_app_node
-        command: >
-            sh -c "
-             npx sequelize-cli db:migrate &&
-             npx sequelize-cli db:seed:all &&
-             npm run dev"
         volumes:
             - .:/usr/app/
             - /usr/app/node_modules

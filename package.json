@@ -8,7 +8,9 @@
         "test": "jest --runInBand --silent",
         "coverage": "jest --runInBand --silent --coverage",
         "lint": "eslint ./",
-        "lint-fix": "eslint ./ --fix"
+        "lint-fix": "eslint ./ --fix",
+        "db:migrate": "sequelize-cli db:migrate",
+        "db:seed:all": "sequelize-cli db:seed:all"
     },
     "author": "",
     "license": "ISC",
