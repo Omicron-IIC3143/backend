@@ -2,7 +2,6 @@ services:
     web:
         build: .
         container_name: my_app_node
-        command: 'npm run dev'
         volumes:
             - .:/usr/app/
             - /usr/app/node_modules
