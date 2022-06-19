@@ -23,7 +23,7 @@ jobs:
         run: |
           docker-compose -f docker-compose.yml run web npm run db:migrate
           docker-compose -f docker-compose.yml run web npm run db:seed:all
-          docker-compose -f docker-compose.yml run web npm run test
+          docker-compose -f docker-compose.yml run web npm run coverage
         
       - name: Linter
         run: docker-compose -f docker-compose.yml run --rm web npm run lint
