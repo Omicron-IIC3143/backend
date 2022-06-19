@@ -22,6 +22,38 @@ router.get('/',passport.authenticate('jwt', { session: false }), async (ctx, nex
 });
 
 
+//Get user fundings
+router.get('/transactions/:id', passport.authenticate('jwt', { session: false }), async (ctx, next) => {
+	try {
+		let myFinance = await ctx.db.Funding.findAll({where: {userId: ctx.params.id}});
+
+		if (myFinance.length === 0) {
+			throw new Error(`There's no finance linked to the user: ${ctx.params.id}`);
+		} else {
+			ctx.body = myFinance;
+			next();
+		}
+	} catch (ValidationError) {
+		ctx.throw(404, `${ValidationError}`);
+	}
+});
+
+//Get projects fundings
+router.get('/project/:id', passport.authenticate('jwt', { session: false }), async (ctx, next) => {
+	try {
+		let projectFinance = await ctx.db.Funding.findAll({where: {projectId: ctx.params.id}});
+
+		if (projectFinance.length === 0) {
+			throw new Error(`There's no finance linked to the project: ${ctx.params.id}`);
+		} else {
+			ctx.body = projectFinance;
+			next();
+		}
+	} catch (ValidationError) {
+		ctx.throw(404, `${ValidationError}`);
+	}
+});
+
 //Get funding by id
 router.get('/:id', passport.authenticate('jwt', { session: false }), async (ctx, next) => {
 	try {

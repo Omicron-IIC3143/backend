@@ -168,7 +168,6 @@ router.delete('/delete/:id', passport.authenticate('jwt', { session: false }), a
 	}
 });
 
-
 // Edit user by id
 router.put('/:id', passport.authenticate('jwt', { session: false }), async (ctx) => {
 	try{
