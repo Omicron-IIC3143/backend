@@ -74,13 +74,36 @@ router.get('/:id', passport.authenticate('jwt', { session: false }), async (ctx,
 // Post new funding
 router.post('/new', passport.authenticate('jwt', { session: false }), async (ctx) => {
 	try {
-		let user = await ctx.db.User.findAll({where: {id: ctx.request.body.userId}});
-		let project = await ctx.db.Project.findAll({where: {id: ctx.request.body.projectId}});
+		const data = ctx.request.body;
+		let user = await ctx.db.User.findAll({where: {id: data.userId}});
+		let project = await ctx.db.Project.findAll({where: {id: data.projectId}});
 		if (user.length === 0){
 			throw new Error(`There's no user under the id: ${ctx.request.body.userId}, to make the donation use another id`);
 		}
-		if (project.length === 0){
-			throw new Error(`There's no project under the id: ${ctx.request.body.userId}, use a created project to finance`);
+		if (project.length === 0 && project[0].currentState === 'accepted'){
+			throw new Error(`There's no project under the id: ${ctx.request.body.userId}, use an accepted project to finance`);
+		}
+		if (user[0].money < data.amount) {
+			throw new Error(`The user under id: ${user[0].id}, does not have sufficient money`);
+		}
+		if (data.amount <= 0) {
+			throw new Error(`Funding cannot have ammount 0 or negative`);
+		}
+		await user[0].update({
+			...user[0],
+			money: user[0].money - data.amount,
+		});
+		if (project[0].currentAmount + data.amount >= project[0].goalAmount) {
+			await project[0].update({
+				...project[0],
+				currentAmount: project[0].currentAmount + data.amount,
+				currentState: 'completed',
+			})
+		} else {
+			await project[0].update({
+				...project[0],
+				currentAmount: project[0].currentAmount + data.amount,
+			})
 		}
 		const new_finance = await ctx.db.Funding.build(ctx.request.body);
 		await new_finance.save();
