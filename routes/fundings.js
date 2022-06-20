@@ -87,7 +87,7 @@ router.post('/new', passport.authenticate('jwt', { session: false }), async (ctx
 			throw new Error(`The user under id: ${user[0].id}, does not have sufficient money`);
 		}
 		if (data.amount <= 0) {
-			throw new Error(`Funding cannot have ammount 0 or negative`);
+			throw new Error('Funding cannot have ammount 0 or negative');
 		}
 		await user[0].update({
 			...user[0],
@@ -98,12 +98,12 @@ router.post('/new', passport.authenticate('jwt', { session: false }), async (ctx
 				...project[0],
 				currentAmount: project[0].currentAmount + data.amount,
 				currentState: 'completed',
-			})
+			});
 		} else {
 			await project[0].update({
 				...project[0],
 				currentAmount: project[0].currentAmount + data.amount,
-			})
+			});
 		}
 		const new_finance = await ctx.db.Funding.build(ctx.request.body);
 		await new_finance.save();
