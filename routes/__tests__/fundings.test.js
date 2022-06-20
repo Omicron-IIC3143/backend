@@ -46,7 +46,43 @@ describe('Funding Test Suite', function() {
 			expect(response.body.amount).toBe(100.0);
 		});
 
+		test('get fundings of user with id x', async () => {
+			const response = await request
+				.get(`${baseUrl}/transactions/2`)
+				.set('Content-type', 'application/json')
+				.set('Authorization', `Bearer ${token}`);
+
+			const transactions = response.body;
+
+			transactions.map((transaction) => {
+				expect(transaction.userId).toBe(2);
+				expect(transaction.amount).toBeGreaterThan(0);
+			});
+		});
+		test('get fundings of project with id x', async () => {
+			const response = await request
+				.get(`${baseUrl}/project/3`)
+				.set('Content-type', 'application/json')
+				.set('Authorization', `Bearer ${token}`);
+
+			const transactions = response.body;
+
+			transactions.map((transaction) => {
+				expect(transaction.projectId).toBe(3);
+				expect(transaction.amount).toBeGreaterThan(0);
+			});
+		});
+
 		test('post a new funding', async () => {
+			await app.context.db.User.update(
+				{
+					money: 1000
+				},
+				{
+					where: {
+						id: 2,
+					}}
+			);
 			const testFunding = {
 				userId: 2,
 				projectId: 1,
@@ -61,7 +97,6 @@ describe('Funding Test Suite', function() {
 			expect(response.status).toBe(201);
 			testFundingId = response.body.id;
 		});
-
 		test('edit funding', async () => {
 			const testEditFunding = {
 				amount: 150.0
@@ -94,6 +129,71 @@ describe('Funding Test Suite', function() {
 				.set('Authorization', `Bearer ${token}`);
 
 			expect(response.status).toBe(404);
+		});
+		test('get user fundings by id - no validation', async () => {
+			const response = await request
+				.get(`${baseUrl}/transactions/2`)
+				.set('Content-type', 'application/json');
+
+			expect(response.status).toBe(401);
+		});
+		test('get user fundings by id - user has no fundings', async () => {
+			const userBody = {
+				name: 'user name testing',
+				rut: 'user rut testing',
+				email:'usertest@test.cl',
+				password: 'test',
+				isAdmin: true,
+				money: 0,
+				pictureUrl: 'test picture url',
+				description: ' test description',
+			};
+			const user = await app.context.db.User.create(userBody);
+			const response = await request
+				.get(`${baseUrl}/transactions/${user.id}`)
+				.set('Content-type', 'application/json')
+				.set('Authorization', `Bearer ${token}`);
+
+			expect(response.status).toBe(404);
+			await app.context.db.User.destroy({
+				where: {
+					id: user.id
+				} 
+			});
+		});
+		test('get project fundings by id - no validation', async () => {
+			const response = await request
+				.get(`${baseUrl}/project/3`)
+				.set('Content-type', 'application/json');
+
+			expect(response.status).toBe(401);
+		});
+		test('get project fundings by id - project has no fundings', async () => {
+			const projectBody = {
+				name: 'projecto nuevo',
+				description: 'Esta es la descripcion del proyecto nuevo',
+				pictureUrl: 'url foto de projecto nuevo',
+				company: 'new company',
+				topic: 'Ayuda social',
+				currentAmount: 0,
+				goalAmount: 1000,
+				currentState: 'pending',
+				date: '2022-05-28',
+				tags: 'tag-1',
+				userId: 1,
+			};
+			const project = await app.context.db.Project.create(projectBody);
+			const response = await request
+				.get(`${baseUrl}/project/${project.id}`)
+				.set('Content-type', 'application/json')
+				.set('Authorization', `Bearer ${token}`);
+
+			expect(response.status).toBe(404);
+			await app.context.db.Project.destroy({
+				where: {
+					id: project.id
+				} 
+			});
 		});
 		test('get all fundings - no validation', async () => {
 			const response = await request
@@ -129,6 +229,38 @@ describe('Funding Test Suite', function() {
 				.set('Content-type', 'application/json')
 				.set('Authorization', `Bearer ${token}`)
 				.send(testPostFunding);
+
+			expect(response.status).toBe(400);
+		});
+		test('post funding - user does not have sufficient money', async () => {
+			const testPostFunding = {
+				userId: 2,
+				projectId: 1,
+				amount: 10000.0
+			};
+
+			const response = await request
+				.post(`${baseUrl}/new`)
+				.set('Content-type', 'application/json')
+				.set('Authorization', `Bearer ${token}`)
+				.send(testPostFunding);
+
+
+			expect(response.status).toBe(400);
+		});
+		test('post funding - funding with amount 0', async () => {
+			const testPostFunding = {
+				userId: 2,
+				projectId: 1,
+				amount: 0.0
+			};
+
+			const response = await request
+				.post(`${baseUrl}/new`)
+				.set('Content-type', 'application/json')
+				.set('Authorization', `Bearer ${token}`)
+				.send(testPostFunding);
+
 
 			expect(response.status).toBe(400);
 		});
