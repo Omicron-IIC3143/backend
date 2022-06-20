@@ -6,7 +6,7 @@ module.exports = {
 		return queryInterface.bulkInsert('Reports', [{
 			title: 'teleton esta de pana',
 			description: 'Esta es la descripcion del reporte Teleton',
-			picture: 'foto del reporte teleton',
+			pictureUrl: 'foto del reporte teleton',
 			projectId: 1,
 			createdAt: new Date(),
 			updatedAt: new Date()
@@ -14,7 +14,7 @@ module.exports = {
 		{
 			title: 'colecta esta de pana',
 			description: 'Esta es la descripcion del reporte colecta',
-			picture: 'foto del reporte colecta',
+			pictureUrl: 'foto del reporte colecta',
 			projectId: 2,
 			createdAt: new Date(),
 			updatedAt: new Date()

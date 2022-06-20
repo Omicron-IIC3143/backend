@@ -12,6 +12,15 @@ module.exports = (sequelize, DataTypes) => {
 		// eslint-disable-next-line no-unused-vars
 		static associate(models) {
 			// define association here
+			Project.belongsTo(models.User, {
+				foreignKey: 'userId',
+			});
+			Project.hasOne(models.Reports, {
+				foreignKey: 'projectId',
+			});
+			Project.hasMany(models.Funding, {
+				foreignKey: 'projectId',
+			});
 		}
 	}
 	Project.init({
@@ -23,7 +32,7 @@ module.exports = (sequelize, DataTypes) => {
 			type: DataTypes.TEXT,
 			allowNull: false,
 		},
-		picture: {
+		pictureUrl: {
 			type: DataTypes.TEXT,
 			allowNull: true,
 		},
@@ -46,10 +55,6 @@ module.exports = (sequelize, DataTypes) => {
 		currentState: {
 			type: DataTypes.STRING,
 			defaultValue: 'pending',
-		},
-		deadlineTime: {
-			type: DataTypes.INTEGER,
-			allowNull: false,
 		},
 		date: {
 			type: DataTypes.DATE,

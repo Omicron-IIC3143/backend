@@ -7,7 +7,7 @@ const router = new Router({
 
 
 //Get All Projects
-router.get('/',passport.authenticate('jwt', { session: false }), async (ctx, next) => {
+router.get('/', async (ctx, next) => {
 	try {
 		const projects = await ctx.db.Project.findAll();
 		if (projects.length === 0){
@@ -23,7 +23,7 @@ router.get('/',passport.authenticate('jwt', { session: false }), async (ctx, nex
 
 
 //Get project by id
-router.get('/:id', passport.authenticate('jwt', { session: false }), async (ctx, next) => {
+router.get('/:id', async (ctx, next) => {
 	try {
 		let getCurrentProject = await ctx.db.Project.findAll({where: {id: ctx.params.id}});
 
@@ -50,7 +50,7 @@ router.post('/new', passport.authenticate('jwt', { session: false }), async (ctx
 		await new_project.save();
 		ctx.body = new_project;
 		ctx.response.status = 201;
-		ctx.body = 'New project added:';
+		ctx.message = 'New project added';
 	} catch (ValidationError) {
 		ctx.throw(400, `Couldn't add the new project: ${ValidationError}`);
 	}
@@ -60,11 +60,10 @@ router.post('/new', passport.authenticate('jwt', { session: false }), async (ctx
 // Delete project by id
 router.delete('/delete/:id', passport.authenticate('jwt', { session: false }), async (ctx) => {
 	try {
-		const deleted = await ctx.db.Project.destroy({where: {id: ctx.params.id}});
-		
-		if (deleted > 0) {
+		const updated = await ctx.db.Project.update({currentState: 'deleted'}, {where: {id: ctx.params.id}});
+		if (updated > 0) {
 			ctx.response.status = 200;
-			ctx.body = `Project ${ctx.params.id} deleted`;
+			ctx.message = `Project ${ctx.params.id} deleted`;
 		} else {
 			throw new Error('Project not found');
 		}
@@ -82,7 +81,8 @@ router.put('/:id', passport.authenticate('jwt', { session: false }), async (ctx)
 		
 		if (update > 0) {
 			ctx.response.status = 200;
-			ctx.body = 'Project updated';
+			ctx.message = 'Project updated';
+			ctx.body = data;
 		} else {
 			throw new Error('Something is wrong check the parameters');
 		}

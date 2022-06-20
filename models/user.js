@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 'use strict';
 const {
 	Model
@@ -13,6 +12,12 @@ module.exports = (sequelize, DataTypes) => {
 		// eslint-disable-next-line no-unused-vars
 		static associate(models) {
 			// define association here
+			User.hasMany(models.Project, {
+				foreignKey: 'userId',
+			});
+			User.hasMany(models.Funding, {
+				foreignKey: 'userId',
+			});
 		}
 	}
 	User.init({
@@ -42,7 +47,7 @@ module.exports = (sequelize, DataTypes) => {
 			allowNull: false,
 			defaultValue: 0,
 		},
-		picture: DataTypes.TEXT,
+		pictureUrl: DataTypes.TEXT,
 		description: DataTypes.TEXT
 	}, {
 		sequelize,

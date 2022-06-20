@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 'use strict';
 const {
 	Model
@@ -12,6 +11,10 @@ module.exports = (sequelize, DataTypes) => {
      */
 		static associate(models) {
 			// define association here
+			Reports.belongsTo(models.Project, {
+				foreignKey: 'projectId',
+				onDelete: 'CASCADE'
+			});
 		}
 	}
 	Reports.init({
@@ -23,7 +26,7 @@ module.exports = (sequelize, DataTypes) => {
 			type: DataTypes.TEXT,
 			allowNull: false,
 		},
-		picture: DataTypes.TEXT,
+		pictureUrl: DataTypes.TEXT,
 		projectId: {
 			type: DataTypes.INTEGER,
 			allowNull: false,

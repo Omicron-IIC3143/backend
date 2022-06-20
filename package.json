@@ -5,9 +5,12 @@
     "main": "server.js",
     "scripts": {
         "dev": "nodemon -L server.js",
-        "test": "test",
+        "test": "jest --runInBand --silent",
+        "coverage": "jest --runInBand --silent --coverage",
         "lint": "eslint ./",
-        "lint-fix": "eslint ./ --fix"
+        "lint-fix": "eslint ./ --fix",
+        "db:migrate": "sequelize-cli db:migrate",
+        "db:seed:all": "sequelize-cli db:seed:all"
     },
     "author": "",
     "license": "ISC",
@@ -31,6 +34,8 @@
     },
     "devDependencies": {
         "eslint": "^8.15.0",
-        "nodemon": "^2.0.15"
+        "jest": "^28.1.0",
+        "nodemon": "^2.0.15",
+        "supertest": "^6.2.3"
     }
 }

@@ -12,13 +12,24 @@ module.exports = {
 	up: (queryInterface, Sequelize) => {
 
 		return queryInterface.bulkInsert('Users', [{
+			name: 'Deleted_user',
+			rut: 'Deleted',
+			email:'deleted@uc.cl',
+			password: hashPassword('deleted'),
+			isAdmin: true,
+			money: 0,
+			pictureUrl: 'No_Disponible',
+			description: 'El usuario fue eliminado',
+			createdAt: new Date(),
+			updatedAt: new Date()
+		},{
 			name: 'vicho',
 			rut: '123',
 			email:'vicho@uc.cl',
 			password: hashPassword('vicho'),
 			isAdmin: true,
 			money: 0,
-			picture: 'hello',
+			pictureUrl: 'hello',
 			description: 'description',
 			createdAt: new Date(),
 			updatedAt: new Date()
@@ -29,7 +40,7 @@ module.exports = {
 			password: hashPassword('anto'),
 			isAdmin: true,
 			money: 0,
-			picture: 'hello',
+			pictureUrl: 'hello',
 			description: 'description',
 			createdAt: new Date(),
 			updatedAt: new Date()
