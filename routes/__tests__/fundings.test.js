@@ -47,6 +47,15 @@ describe('Funding Test Suite', function() {
 		});
 
 		test('post a new funding', async () => {
+			await app.context.db.User.update(
+				{
+					money: 1000
+				},
+				{
+					where: {
+						id: 2,
+				}}
+			)
 			const testFunding = {
 				userId: 2,
 				projectId: 1,
