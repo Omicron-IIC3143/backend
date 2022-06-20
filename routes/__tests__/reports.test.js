@@ -182,6 +182,13 @@ describe('Report Test Suite', function() {
 
 			expect(response.status).toBe(401);
 		});
+		test('get all reports - no validation', async () => {
+			const response = await request
+				.get(`${baseUrl}`)
+				.set('Content-type', 'application/json');
+
+			expect(response.status).toBe(401);
+		});
 	});
 
 	

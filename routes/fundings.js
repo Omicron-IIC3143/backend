@@ -80,7 +80,7 @@ router.post('/new', passport.authenticate('jwt', { session: false }), async (ctx
 		if (user.length === 0){
 			throw new Error(`There's no user under the id: ${ctx.request.body.userId}, to make the donation use another id`);
 		}
-		if (project.length === 0 && project[0].currentState === 'accepted'){
+		if (project.length === 0 || project[0].currentState !== 'accepted'){
 			throw new Error(`There's no project under the id: ${ctx.request.body.userId}, use an accepted project to finance`);
 		}
 		if (user[0].money < data.amount) {

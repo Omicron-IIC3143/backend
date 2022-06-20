@@ -215,5 +215,12 @@ describe('Projects Test Suite', function() {
 
 			expect(response.status).toBe(404);
 		});
+		test('get project by id - no validation', async () => {
+			const response = await request
+				.get(`${baseUrl}/${newProjectId}`)
+				.set('Content-type', 'application/json');
+
+			expect(response.status).toBe(404);
+		});
 	});
 });
