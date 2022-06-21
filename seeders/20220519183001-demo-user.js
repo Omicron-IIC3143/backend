@@ -18,7 +18,7 @@ module.exports = {
 			password: hashPassword('deleted'),
 			isAdmin: true,
 			money: 0,
-			pictureUrl: 'No_Disponible',
+			pictureUrl: 'https://feedback.seekingalpha.com/s/cache/b4/58/b4582f85a7033671b73bedbe8afafc47.png',
 			description: 'El usuario fue eliminado',
 			createdAt: new Date(),
 			updatedAt: new Date()
@@ -28,9 +28,9 @@ module.exports = {
 			email:'vicho@uc.cl',
 			password: hashPassword('vicho'),
 			isAdmin: true,
-			money: 0,
-			pictureUrl: 'hello',
-			description: 'description',
+			money: 3000.0,
+			pictureUrl: 'https://feedback.seekingalpha.com/s/cache/b4/58/b4582f85a7033671b73bedbe8afafc47.png',
+			description: 'desarrollador de backend',
 			createdAt: new Date(),
 			updatedAt: new Date()
 		},{
@@ -39,9 +39,9 @@ module.exports = {
 			email:'antoo@uc.cl',
 			password: hashPassword('anto'),
 			isAdmin: true,
-			money: 0,
-			pictureUrl: 'hello',
-			description: 'description',
+			money: 200.0,
+			pictureUrl: 'https://feedback.seekingalpha.com/s/cache/b4/58/b4582f85a7033671b73bedbe8afafc47.png',
+			description: 'desarrolladora de backend',
 			createdAt: new Date(),
 			updatedAt: new Date()
 		}]);

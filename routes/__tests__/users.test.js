@@ -30,7 +30,7 @@ describe('Users Test Suite', function() {
 			jwt = response.body.token;
 			id = response.body.user.id;
 
-			expect(response.status).toBe(200);
+			expect(response.status).toBe(201);
 		});
 
 		test('get seed users', async () => {
@@ -87,7 +87,7 @@ describe('Users Test Suite', function() {
 				.set('Content-type', 'application/json')
 				.set('Authorization', `Bearer ${jwt}`);
 
-			expect(response.status).toBe(400);
+			expect(response.status).toBe(404);
 		});
 
 		test('user login', async () => {
@@ -212,7 +212,7 @@ describe('Users Test Suite', function() {
 				.set('Content-type', 'application/json')
 				.set('Authorization', `Bearer ${token}`);
 
-			expect(response.status).toBe(400);
+			expect(response.status).toBe(404);
 		});
 
 		test('register user - already registared', async () => {
@@ -248,7 +248,7 @@ describe('Users Test Suite', function() {
 				.set('Content-type', 'application/json')
 				.send(invalidUser);
 
-			expect(response.status).toBe(400);
+			expect(response.status).toBe(404);
 		});
 
 		test('user login - no user', async () => {
@@ -262,7 +262,7 @@ describe('Users Test Suite', function() {
 				.set('Content-type', 'application/json')
 				.send(loginUser);
 
-			expect(response.status).toBe(401);
+			expect(response.status).toBe(404);
 		});
 
 		test('user login - no password match', async () => {
@@ -276,7 +276,7 @@ describe('Users Test Suite', function() {
 				.set('Content-type', 'application/json')
 				.send(loginUser);
 
-			expect(response.status).toBe(401);
+			expect(response.status).toBe(403);
 		});
 		test('delete user - no user', async () => {
 			const response = await request
@@ -284,7 +284,7 @@ describe('Users Test Suite', function() {
 				.set('Content-type', 'application/json')
 				.set('Authorization', `Bearer ${token}`);
 
-			expect(response.status).toBe(400);
+			expect(response.status).toBe(404);
 		});
 
 		test('edit user - no user', async () => {

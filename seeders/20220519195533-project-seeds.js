@@ -3,8 +3,10 @@ module.exports = {
 	up: (queryInterface, Sequelize) => {
 		return queryInterface.bulkInsert('Projects', [{
 			name: 'Teleton',
-			description: 'Esta es la descripcion del proyecto Teleton',
-			pictureUrl: 'foto de teleton',
+			description: 'El Teletón o Telemaratón (composición de Televisión y Maratón) es un evento benéfico televisado, \
+			en el que se intercalan diversas presentaciones artísticas y de entretenimiento que se realiza actualmente en diferentes \
+			países con el fin de recaudar fondos para distintas causas sociales.',
+			pictureUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/26/Logo_Telet%C3%B3n.svg/1024px-Logo_Telet%C3%B3n.svg.png',
 			company: 'Teleton S.A',
 			topic: 'Ayuda social',
 			currentAmount: 1000000.0,
@@ -18,8 +20,10 @@ module.exports = {
 		},
 		{
 			name: 'Colecta Social',
-			description: 'Esta es la descripcion del proyecto de Colecta Social',
-			pictureUrl: 'foto de colecta social',
+			description: 'La Colecta Anual de Cáritas es una oportunidad privilegiada de encuentro solidario. \
+			Hoy, más que nunca, nos reunimos como comunidad creyente para promover el compromiso en nuestra sociedad \
+			y brindar oportunidades a los hermanos más pobres y excluidos de nuestro país.',
+			pictureUrl: 'https://fundacioncuentaconnosotros.org/wp-content/uploads/Campana-Alcancia-Solidaria.jpg',
 			company: 'Colecta Social S.A',
 			topic: 'Ayuda social',
 			currentAmount: 723000.0,
@@ -33,8 +37,10 @@ module.exports = {
 		},
 		{
 			name: 'Un Techo para Chile',
-			description: 'Esta es la descripcion del proyecto Un Techo para Chile',
-			pictureUrl: 'foto de un techo para chile',
+			description: 'Buscamos mejorar las condiciones de vivienda y hábitat a través del diseño, \
+			gestión y construcción de proyectos de vivienda, acceso a servicios básicos e infraestructura comunitaria, \
+			en acción conjunta entre pobladores y voluntarios.',
+			pictureUrl: 'https://upload.wikimedia.org/wikipedia/commons/d/d0/Logo_TECHO_Chile.jpg',
 			company: 'Techo para Chile ltda',
 			topic: 'Ayuda social',
 			currentAmount: 50900.0,

@@ -149,18 +149,10 @@
 <a name='L84'></a><a href='#L84'>84</a>
 <a name='L85'></a><a href='#L85'>85</a>
 <a name='L86'></a><a href='#L86'>86</a>
-<a name='L87'></a><a href='#L87'>87</a>
-<a name='L88'></a><a href='#L88'>88</a>
-<a name='L89'></a><a href='#L89'>89</a>
-<a name='L90'></a><a href='#L90'>90</a>
-<a name='L91'></a><a href='#L91'>91</a>
-<a name='L92'></a><a href='#L92'>92</a>
-<a name='L93'></a><a href='#L93'>93</a>
-<a name='L94'></a><a href='#L94'>94</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">9x</span>
+<a name='L87'></a><a href='#L87'>87</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">9x</span>
 <span class="cline-any cline-yes">9x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">9x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -180,11 +172,9 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">9x</span>
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -197,7 +187,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">9x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
@@ -215,7 +204,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">9x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
@@ -231,12 +219,10 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">9x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -256,7 +242,6 @@ const router = new Router({
 	prefix: '/projects'
 });
 &nbsp;
-&nbsp;
 //Get All Projects
 router.get('/', async (ctx, next) =&gt; {
 	try {
@@ -268,16 +253,14 @@ router.get('/', async (ctx, next) =&gt; {
 			next();
 		}
 	} catch (ValidationError) {
-<span class="cstat-no" title="statement not covered" >		ctx.throw(400, `${ValidationError}`);</span>
+<span class="cstat-no" title="statement not covered" >		ctx.throw(404, `${ValidationError}`);</span>
 	}
 });
-&nbsp;
 &nbsp;
 //Get project by id
 router.get('/:id', async (ctx, next) =&gt; {
 	try {
 		let getCurrentProject = await ctx.db.Project.findAll({where: {id: ctx.params.id}});
-&nbsp;
 		if (getCurrentProject.length === 0) {
 			throw new Error(`There's no project under id: ${ctx.params.id}`);
 		} else {
@@ -288,7 +271,6 @@ router.get('/:id', async (ctx, next) =&gt; {
 		ctx.throw(404, `${ValidationError}`);
 	}
 });
-&nbsp;
 &nbsp;
 // Post new project
 router.post('/new', passport.authenticate('jwt', { session: false }), async (ctx) =&gt; {
@@ -303,10 +285,9 @@ router.post('/new', passport.authenticate('jwt', { session: false }), async (ctx
 		ctx.response.status = 201;
 		ctx.message = 'New project added';
 	} catch (ValidationError) {
-		ctx.throw(400, `Couldn't add the new project: ${ValidationError}`);
+		ctx.throw(404, `Couldn't add the new project: ${ValidationError}`);
 	}
 });
-&nbsp;
 &nbsp;
 // Delete project by id
 router.delete('/delete/:id', passport.authenticate('jwt', { session: false }), async (ctx) =&gt; {
@@ -319,17 +300,15 @@ router.delete('/delete/:id', passport.authenticate('jwt', { session: false }), a
 			throw new Error('Project not found');
 		}
 	} catch (ValidationError) {
-		ctx.throw(400, `${ValidationError}`);
+		ctx.throw(404, `${ValidationError}`);
 	}
 });
-&nbsp;
 &nbsp;
 // Update project by id
 router.put('/:id', passport.authenticate('jwt', { session: false }), async (ctx) =&gt; {
 	try {
 		var data = ctx.request.body;
 		const update = await ctx.db.Project.update(data, {where: {id: ctx.params.id}});
-		
 		if (update &gt; 0) {
 			ctx.response.status = 200;
 			ctx.message = 'Project updated';
@@ -349,7 +328,7 @@ module.exports = router;</pre></td></tr></table></pre>
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at Mon Jun 20 2022 17:26:04 GMT+0000 (Coordinated Universal Time)
+                at Tue Jun 21 2022 06:09:16 GMT+0000 (Coordinated Universal Time)
             </div>
         <script src="../../prettify.js"></script>
         <script>

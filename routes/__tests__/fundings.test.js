@@ -215,7 +215,7 @@ describe('Funding Test Suite', function() {
 				.set('Authorization', `Bearer ${token}`)
 				.send(testPostFunding);
 
-			expect(response.status).toBe(400);
+			expect(response.status).toBe(404);
 		});
 		test('post funding - no project with id x', async () => {
 			const testPostFunding = {
@@ -230,7 +230,7 @@ describe('Funding Test Suite', function() {
 				.set('Authorization', `Bearer ${token}`)
 				.send(testPostFunding);
 
-			expect(response.status).toBe(400);
+			expect(response.status).toBe(404);
 		});
 		test('post funding - user does not have sufficient money', async () => {
 			const testPostFunding = {
@@ -246,7 +246,7 @@ describe('Funding Test Suite', function() {
 				.send(testPostFunding);
 
 
-			expect(response.status).toBe(400);
+			expect(response.status).toBe(404);
 		});
 		test('post funding - funding with amount 0', async () => {
 			const testPostFunding = {
@@ -262,7 +262,7 @@ describe('Funding Test Suite', function() {
 				.send(testPostFunding);
 
 
-			expect(response.status).toBe(400);
+			expect(response.status).toBe(404);
 		});
 		test('post funding - no validation', async () => {
 			const testPostFunding = {
@@ -284,7 +284,7 @@ describe('Funding Test Suite', function() {
 				.set('Content-type', 'application/json')
 				.set('Authorization', `Bearer ${token}`);
 
-			expect(response.status).toBe(400);
+			expect(response.status).toBe(404);
 		});
 		test('edit funding - no funding', async () => {
 			const testEditFunding = {
