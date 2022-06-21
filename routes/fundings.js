@@ -5,7 +5,6 @@ const router = new Router({
 	prefix: '/finance'
 });
 
-
 //Get All fundings
 router.get('/',passport.authenticate('jwt', { session: false }), async (ctx, next) => {
 	try {
@@ -17,16 +16,14 @@ router.get('/',passport.authenticate('jwt', { session: false }), async (ctx, nex
 			next();
 		}
 	} catch (ValidationError) {
-		ctx.throw(400, `${ValidationError}`);
+		ctx.throw(404, `${ValidationError}`);
 	}
 });
-
 
 //Get user fundings
 router.get('/transactions/:id', passport.authenticate('jwt', { session: false }), async (ctx, next) => {
 	try {
 		let myFinance = await ctx.db.Funding.findAll({where: {userId: ctx.params.id}});
-
 		if (myFinance.length === 0) {
 			throw new Error(`There's no finance linked to the user: ${ctx.params.id}`);
 		} else {
@@ -42,7 +39,6 @@ router.get('/transactions/:id', passport.authenticate('jwt', { session: false })
 router.get('/project/:id', passport.authenticate('jwt', { session: false }), async (ctx, next) => {
 	try {
 		let projectFinance = await ctx.db.Funding.findAll({where: {projectId: ctx.params.id}});
-
 		if (projectFinance.length === 0) {
 			throw new Error(`There's no finance linked to the project: ${ctx.params.id}`);
 		} else {
@@ -58,7 +54,6 @@ router.get('/project/:id', passport.authenticate('jwt', { session: false }), asy
 router.get('/:id', passport.authenticate('jwt', { session: false }), async (ctx, next) => {
 	try {
 		let getCurrentFinance = await ctx.db.Funding.findAll({where: {id: ctx.params.id}});
-
 		if (getCurrentFinance.length === 0) {
 			throw new Error(`There's no finance under id: ${ctx.params.id}`);
 		} else {
@@ -69,7 +64,6 @@ router.get('/:id', passport.authenticate('jwt', { session: false }), async (ctx,
 		ctx.throw(404, `${ValidationError}`);
 	}
 });
-
 
 // Post new funding
 router.post('/new', passport.authenticate('jwt', { session: false }), async (ctx) => {
@@ -111,16 +105,14 @@ router.post('/new', passport.authenticate('jwt', { session: false }), async (ctx
 		ctx.response.status = 201;
 		ctx.message = 'New finance added';
 	} catch (ValidationError) {
-		ctx.throw(400, `Couldn't add the new transaction: ${ValidationError}`);
+		ctx.throw(404, `Couldn't add the new transaction: ${ValidationError}`);
 	}
 });
-
 
 // Delete funding by id
 router.delete('/delete/:id', passport.authenticate('jwt', { session: false }), async (ctx) => {
 	try {
 		const deleted = await ctx.db.Funding.destroy({where: {id: ctx.params.id}});
-		
 		if (deleted > 0) {
 			ctx.response.status = 200;
 			ctx.body = `Finance ${ctx.params.id} deleted`;
@@ -128,17 +120,15 @@ router.delete('/delete/:id', passport.authenticate('jwt', { session: false }), a
 			throw new Error('Finance not found');
 		}
 	} catch (ValidationError) {
-		ctx.throw(400, `${ValidationError}`);
+		ctx.throw(404, `${ValidationError}`);
 	}
 });
-
 
 // Update funding by id
 router.put('/:id', passport.authenticate('jwt', { session: false }), async (ctx) => {
 	try {
 		var data = ctx.request.body;
 		const update = await ctx.db.Funding.update(data, {where: {id: ctx.params.id}});
-		
 		if (update > 0) {
 			ctx.response.status = 200;
 			ctx.body = 'Finance updated';

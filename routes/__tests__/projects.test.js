@@ -138,7 +138,7 @@ describe('Projects Test Suite', function() {
 				.set('Authorization', `Bearer ${token}`)
 				.send(postProject);
 
-			expect(response.status).toBe(400);
+			expect(response.status).toBe(404);
 		});
 		test('post project - no validation', async () => {
 			const postProject = {
@@ -175,7 +175,7 @@ describe('Projects Test Suite', function() {
 				.set('Content-type', 'application/json')
 				.set('Authorization', `Bearer ${token}`);
 
-			expect(response.status).toBe(400);
+			expect(response.status).toBe(404);
 		});
 		test('delete project - no validation', async () => {
 			const response = await request

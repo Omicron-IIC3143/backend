@@ -29,9 +29,9 @@ describe('Report Test Suite', function() {
 			expect(response.status).toBe(200);
 			seedReports.map((seedReport) => {
 				if (seedReport.id == 1) {
-					expect(seedReport.title).toBe('teleton esta de pana');
+					expect(seedReport.title).toBe('Teleton esta con un buen progreso.');
 				} else if (seedReport.id == 2) {
-					expect(seedReport.title).toBe('colecta esta de pana');
+					expect(seedReport.title).toBe('Colecta avanza de forma lenta.');
 				}
 			});
 		});
@@ -43,9 +43,10 @@ describe('Report Test Suite', function() {
 				.set('Authorization', `Bearer ${token}`);
 
 			expect(response.status).toBe(200);
-			expect(response.body.title).toBe('teleton esta de pana');
-			expect(response.body.description).toBe('Esta es la descripcion del reporte Teleton');
-			expect(response.body.pictureUrl).toBe('foto del reporte teleton');
+			expect(response.body.title).toBe('Teleton esta con un buen progreso.');
+			expect(response.body.description).toBe('Mediante las donaciones obtenidas se han recaudado $19.000.001 en las primeras horas.');
+			expect(response.body.pictureUrl).toBe('https://img.asmedia.epimg.net/resizer/YUrWEd-2UTLSrdIQouzNcsukEtc=/1952x1098/cloudfront-eu-central-1'
+			+ '.images.arcpublishing.com/diarioas/QFXQBLFUANO7LKRURTE7ZXNL6E.jpg');
 			expect(response.body.projectId).toBe(1);
 		});
 
@@ -100,7 +101,7 @@ describe('Report Test Suite', function() {
 				.set('Content-type', 'application/json')
 				.set('Authorization', `Bearer ${token}`);
 
-			expect(response.status).toBe(400);
+			expect(response.status).toBe(404);
 		});
 
 		test('edit report - no report', async () => {
@@ -149,7 +150,7 @@ describe('Report Test Suite', function() {
 				.set('Authorization', `Bearer ${token}`)
 				.send(testPostFunding);
 
-			expect(response.status).toBe(400);
+			expect(response.status).toBe(404);
 		});
 		test('post report - no project with id x', async () => {
 			const testPostFunding = {
