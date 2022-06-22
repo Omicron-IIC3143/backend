@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1655791756808" clover="3.2.0">
-  <project timestamp="1655791756808" name="All files">
-    <metrics statements="376" coveredstatements="364" conditionals="93" coveredconditionals="80" methods="42" coveredmethods="41" elements="511" coveredelements="485" complexity="0" loc="376" ncloc="376" packages="4" files="12" classes="12"/>
+<coverage generated="1655919971060" clover="3.2.0">
+  <project timestamp="1655919971062" name="All files">
+    <metrics statements="374" coveredstatements="363" conditionals="91" coveredconditionals="79" methods="42" coveredmethods="41" elements="507" coveredelements="483" complexity="0" loc="374" ncloc="374" packages="4" files="12" classes="12"/>
     <package name="app">
       <metrics statements="36" coveredstatements="35" conditionals="0" coveredconditionals="0" methods="3" coveredmethods="2"/>
       <file name="app.js" path="/usr/app/app.js">
@@ -119,9 +119,9 @@
       </file>
     </package>
     <package name="app.routes">
-      <metrics statements="290" coveredstatements="280" conditionals="76" coveredconditionals="68" methods="27" coveredmethods="27"/>
+      <metrics statements="288" coveredstatements="279" conditionals="74" coveredconditionals="67" methods="27" coveredmethods="27"/>
       <file name="fundings.js" path="/usr/app/routes/fundings.js">
-        <metrics statements="76" coveredstatements="73" conditionals="24" coveredconditionals="22" methods="7" coveredmethods="7"/>
+        <metrics statements="74" coveredstatements="72" conditionals="22" coveredconditionals="21" methods="7" coveredmethods="7"/>
         <line num="1" count="9" type="stmt"/>
         <line num="2" count="9" type="stmt"/>
         <line num="4" count="9" type="stmt"/>
@@ -171,33 +171,31 @@
         <line num="83" count="2" type="cond" truecount="2" falsecount="0"/>
         <line num="84" count="1" type="stmt"/>
         <line num="86" count="1" type="stmt"/>
-        <line num="90" count="1" type="cond" truecount="1" falsecount="1"/>
-        <line num="91" count="0" type="stmt"/>
+        <line num="90" count="1" type="stmt"/>
+        <line num="94" count="1" type="stmt"/>
+        <line num="95" count="1" type="stmt"/>
+        <line num="96" count="1" type="stmt"/>
         <line num="97" count="1" type="stmt"/>
-        <line num="102" count="1" type="stmt"/>
-        <line num="103" count="1" type="stmt"/>
-        <line num="104" count="1" type="stmt"/>
-        <line num="105" count="1" type="stmt"/>
-        <line num="106" count="1" type="stmt"/>
-        <line num="108" count="4" type="stmt"/>
-        <line num="113" count="9" type="stmt"/>
-        <line num="114" count="2" type="stmt"/>
-        <line num="115" count="2" type="stmt"/>
-        <line num="116" count="2" type="cond" truecount="2" falsecount="0"/>
-        <line num="117" count="1" type="stmt"/>
-        <line num="118" count="1" type="stmt"/>
-        <line num="120" count="1" type="stmt"/>
-        <line num="123" count="1" type="stmt"/>
-        <line num="128" count="9" type="stmt"/>
-        <line num="129" count="2" type="stmt"/>
-        <line num="130" count="2" type="stmt"/>
-        <line num="131" count="2" type="stmt"/>
-        <line num="132" count="2" type="cond" truecount="2" falsecount="0"/>
-        <line num="133" count="1" type="stmt"/>
-        <line num="134" count="1" type="stmt"/>
-        <line num="136" count="1" type="stmt"/>
-        <line num="139" count="1" type="stmt"/>
-        <line num="143" count="9" type="stmt"/>
+        <line num="98" count="1" type="stmt"/>
+        <line num="100" count="4" type="stmt"/>
+        <line num="105" count="9" type="stmt"/>
+        <line num="106" count="2" type="stmt"/>
+        <line num="107" count="2" type="stmt"/>
+        <line num="108" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="109" count="1" type="stmt"/>
+        <line num="110" count="1" type="stmt"/>
+        <line num="112" count="1" type="stmt"/>
+        <line num="115" count="1" type="stmt"/>
+        <line num="120" count="9" type="stmt"/>
+        <line num="121" count="2" type="stmt"/>
+        <line num="122" count="2" type="stmt"/>
+        <line num="123" count="2" type="stmt"/>
+        <line num="124" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="125" count="1" type="stmt"/>
+        <line num="126" count="1" type="stmt"/>
+        <line num="128" count="1" type="stmt"/>
+        <line num="131" count="1" type="stmt"/>
+        <line num="135" count="9" type="stmt"/>
       </file>
       <file name="index.js" path="/usr/app/routes/index.js">
         <metrics statements="6" coveredstatements="6" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
