@@ -87,18 +87,10 @@ router.post('/new', passport.authenticate('jwt', { session: false }), async (ctx
 			...user[0],
 			money: user[0].money - data.amount,
 		});
-		if (project[0].currentAmount + data.amount >= project[0].goalAmount) {
-			await project[0].update({
-				...project[0],
-				currentAmount: project[0].currentAmount + data.amount,
-				currentState: 'completed',
-			});
-		} else {
-			await project[0].update({
-				...project[0],
-				currentAmount: project[0].currentAmount + data.amount,
-			});
-		}
+		await project[0].update({
+			...project[0],
+			currentAmount: project[0].currentAmount + data.amount,
+		});
 		const new_finance = await ctx.db.Funding.build(ctx.request.body);
 		await new_finance.save();
 		ctx.body = new_finance;
