@@ -33,6 +33,7 @@ module.exports = (sequelize, DataTypes) => {
 		rut: {
 			type: DataTypes.STRING,
 			allowNull: false,
+			unique: true,
 		},
 		password: {
 			type: DataTypes.STRING,

@@ -52,7 +52,9 @@ router.get('/:id/projects', passport.authenticate('jwt', { session: false }), as
 				ctx.body = userProjects.Projects;
 				next();
 			} else {
-				throw new Error(`User with id: ${ctx.params.id} has no projects`);
+				ctx.body = [];
+				ctx.message = `User with id: ${ctx.params.id} has no projects`;
+				next();
 			}
 		}
 	}catch (ValidationError) {
@@ -67,7 +69,13 @@ router.post('/register', async (ctx) => {
 		const oldUser = await ctx.db.User.findOne({where: {email: body.email}});
 		if (oldUser) {
 			ctx.response.status = 403;
-			ctx.body = 'Error: Email already in use';
+			if (oldUser.email == body.email){
+				ctx.body = 'Error: El email ya esta siendo usado por otro usuario';
+			}else if (oldUser.rut == body.rut){
+				ctx.body = 'Error: El Rut ya esta siendo usado por otro usuario';
+			}else{
+				throw new Error('Something wrong happen try again');
+			}
 		} else {
 			const salt = bcrypt.genSaltSync();
 			const hash = bcrypt.hashSync(body.password, salt);
