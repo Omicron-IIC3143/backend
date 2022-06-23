@@ -215,8 +215,7 @@ describe('Users Test Suite', function() {
 
 			expect(response.status).toBe(404);
 		});
-
-		test('register user - already registared', async () => {
+		test('register user - already registared - same email', async () => {
 			const oldUser = {
 				name: 'vicho',
 				rut: '123',
@@ -232,9 +231,30 @@ describe('Users Test Suite', function() {
 				.set('Content-type', 'application/json')
 				.send(oldUser);
 
+			console.log("MARA");
+			console.log(response);
 			expect(response.status).toBe(403);
+			expect(response.res.text).toBe('Error: El email ya esta siendo usado por otro usuario');
 		});
+		test('register user - already registared - same rut', async () => {
+			const oldUser = {
+				name: 'vicho',
+				rut: '8673766-3',
+				email: 'vicho1@uc.cl',
+				password: 'vicho',
+				money: 0,
+				pictureUrl: 'hello',
+				description: 'description'
+			};
 
+			const response = await request
+				.post(`${baseUrl}/register`)
+				.set('Content-type', 'application/json')
+				.send(oldUser);
+
+			expect(response.status).toBe(403);
+			expect(response.res.text).toBe('Error: El Rut ya esta siendo usado por otro usuario');
+		});
 		test('register user - invalid body', async () => {
 			const invalidUser = {
 				name: 'vicho',

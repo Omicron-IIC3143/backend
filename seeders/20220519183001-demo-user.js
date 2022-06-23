@@ -24,7 +24,7 @@ module.exports = {
 			updatedAt: new Date()
 		},{
 			name: 'vicho',
-			rut: '123',
+			rut: '8673766-3',
 			email:'vicho@uc.cl',
 			password: hashPassword('vicho'),
 			isAdmin: true,
@@ -35,7 +35,7 @@ module.exports = {
 			updatedAt: new Date()
 		},{
 			name: 'anto',
-			rut: '123',
+			rut: '18607807-1',
 			email:'anto@uc.cl',
 			password: hashPassword('anto'),
 			isAdmin: true,
@@ -46,7 +46,7 @@ module.exports = {
 			updatedAt: new Date()
 		},{
 			name: 'pedro',
-			rut: '123',
+			rut: '7962581-7',
 			email:'pedro@uc.cl',
 			password: hashPassword('pedro'),
 			isAdmin: false,
@@ -57,7 +57,7 @@ module.exports = {
 			updatedAt: new Date()
 		},{
 			name: 'Juan',
-			rut: '123',
+			rut: '12041742-8',
 			email:'juan@uc.cl',
 			password: hashPassword('juan'),
 			isAdmin: false,
@@ -68,7 +68,7 @@ module.exports = {
 			updatedAt: new Date()
 		},{
 			name: 'Diego',
-			rut: '123',
+			rut: '15750518-1',
 			email:'diego@uc.cl',
 			password: hashPassword('diego'),
 			isAdmin: false,
@@ -79,7 +79,7 @@ module.exports = {
 			updatedAt: new Date()
 		},{
 			name: 'mario',
-			rut: '123',
+			rut: '16271735-9',
 			email:'mario@uc.cl',
 			password: hashPassword('mario'),
 			isAdmin: false,
@@ -90,7 +90,7 @@ module.exports = {
 			updatedAt: new Date()
 		},{
 			name: 'Santiago',
-			rut: '123',
+			rut: '16137036-3',
 			email:'santiago@uc.cl',
 			password: hashPassword('santiago'),
 			isAdmin: false,
@@ -101,7 +101,7 @@ module.exports = {
 			updatedAt: new Date()
 		},{
 			name: 'will smith',
-			rut: '123',
+			rut: '9272750-5',
 			email:'will@uc.cl',
 			password: hashPassword('will'),
 			isAdmin: false,
