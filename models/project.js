@@ -60,7 +60,9 @@ module.exports = (sequelize, DataTypes) => {
 			type: DataTypes.DATE,
 			allowNull: false,
 		},
-		tags: DataTypes.TEXT,
+		tags: {
+			type: DataTypes.ARRAY(DataTypes.TEXT),
+		},
 		userId: {
 			type: DataTypes.STRING,
 			allowNull: false,
