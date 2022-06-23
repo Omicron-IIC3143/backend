@@ -154,7 +154,9 @@ describe('Funding Test Suite', function() {
 				.set('Content-type', 'application/json')
 				.set('Authorization', `Bearer ${token}`);
 
-			expect(response.status).toBe(404);
+			expect(response.status).toBe(200);
+			expect(response.body).toBe([]);
+			expect(response.message).toBe(`There's no finance linked to the user: ${user.id}`);
 			await app.context.db.User.destroy({
 				where: {
 					id: user.id

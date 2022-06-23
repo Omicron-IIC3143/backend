@@ -87,7 +87,9 @@ describe('Users Test Suite', function() {
 				.set('Content-type', 'application/json')
 				.set('Authorization', `Bearer ${jwt}`);
 
-			expect(response.status).toBe(404);
+			expect(response.status).toBe(200);
+			expect(response.body).toBe([]);
+			expect(response.message).toBe(`User with id: ${id} has no projects`);
 		});
 
 		test('user login', async () => {
