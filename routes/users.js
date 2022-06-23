@@ -66,12 +66,14 @@ router.get('/:id/projects', passport.authenticate('jwt', { session: false }), as
 router.post('/register', async (ctx) => {
 	try {
 		const body = ctx.request.body;
-		const oldUser = await ctx.db.User.findOne({where: {email: body.email}});
-		if (oldUser) {
+		const oldUserEmail = await ctx.db.User.findOne({where: {email: body.email}});
+		const oldUserRut = await ctx.db.User.findOne({where: {rut: body.rut}});
+
+		if (oldUserEmail || oldUserRut) {
 			ctx.response.status = 403;
-			if (oldUser.email == body.email){
+			if (oldUserEmail?.email == body.email){
 				ctx.body = 'Error: El email ya esta siendo usado por otro usuario';
-			}else if (oldUser.rut == body.rut){
+			}else if (oldUserRut?.rut == body.rut){
 				ctx.body = 'Error: El Rut ya esta siendo usado por otro usuario';
 			}else{
 				throw new Error('Something wrong happen try again');
