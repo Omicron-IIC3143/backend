@@ -154,7 +154,8 @@ describe('Funding Test Suite', function() {
 				.set('Content-type', 'application/json')
 				.set('Authorization', `Bearer ${token}`);
 
-			expect(response.status).toBe(404);
+			expect(response.status).toBe(200);
+			expect(response.body).toStrictEqual([]);
 			await app.context.db.User.destroy({
 				where: {
 					id: user.id

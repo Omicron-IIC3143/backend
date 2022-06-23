@@ -87,7 +87,8 @@ describe('Users Test Suite', function() {
 				.set('Content-type', 'application/json')
 				.set('Authorization', `Bearer ${jwt}`);
 
-			expect(response.status).toBe(404);
+			expect(response.status).toBe(200);
+			expect(response.body).toStrictEqual([]);
 		});
 
 		test('user login', async () => {

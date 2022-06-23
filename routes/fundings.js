@@ -25,7 +25,9 @@ router.get('/transactions/:id', passport.authenticate('jwt', { session: false })
 	try {
 		let myFinance = await ctx.db.Funding.findAll({where: {userId: ctx.params.id}});
 		if (myFinance.length === 0) {
-			throw new Error(`There's no finance linked to the user: ${ctx.params.id}`);
+			ctx.body = [];
+			ctx.message = `There's no finance linked to the user: ${ctx.params.id}`;
+			next();
 		} else {
 			ctx.body = myFinance;
 			next();
@@ -87,18 +89,10 @@ router.post('/new', passport.authenticate('jwt', { session: false }), async (ctx
 			...user[0],
 			money: user[0].money - data.amount,
 		});
-		if (project[0].currentAmount + data.amount >= project[0].goalAmount) {
-			await project[0].update({
-				...project[0],
-				currentAmount: project[0].currentAmount + data.amount,
-				currentState: 'completed',
-			});
-		} else {
-			await project[0].update({
-				...project[0],
-				currentAmount: project[0].currentAmount + data.amount,
-			});
-		}
+		await project[0].update({
+			...project[0],
+			currentAmount: project[0].currentAmount + data.amount,
+		});
 		const new_finance = await ctx.db.Funding.build(ctx.request.body);
 		await new_finance.save();
 		ctx.body = new_finance;
