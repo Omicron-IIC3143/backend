@@ -88,8 +88,7 @@ describe('Users Test Suite', function() {
 				.set('Authorization', `Bearer ${jwt}`);
 
 			expect(response.status).toBe(200);
-			expect(response.body).toBe([]);
-			expect(response.message).toBe(`User with id: ${id} has no projects`);
+			expect(response.body).toStrictEqual([]);
 		});
 
 		test('user login', async () => {
