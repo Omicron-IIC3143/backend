@@ -231,7 +231,7 @@ describe('Users Test Suite', function() {
 				.set('Content-type', 'application/json')
 				.send(oldUser);
 
-			console.log("MARA");
+			console.log('MARA');
 			console.log(response);
 			expect(response.status).toBe(403);
 			expect(response.res.text).toBe('Error: El email ya esta siendo usado por otro usuario');
