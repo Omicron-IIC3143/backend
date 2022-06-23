@@ -17,7 +17,10 @@ const app = new Koa();
 app.context.db = db;
 
 app.use(koaBody()); 
-app.use(cors());
+var options = {
+	origin: '*'
+};
+app.use(cors(options));
 
 // sessions
 app.use(session(app));
