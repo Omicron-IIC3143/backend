@@ -25,7 +25,9 @@ router.get('/transactions/:id', passport.authenticate('jwt', { session: false })
 	try {
 		let myFinance = await ctx.db.Funding.findAll({where: {userId: ctx.params.id}});
 		if (myFinance.length === 0) {
-			throw new Error(`There's no finance linked to the user: ${ctx.params.id}`);
+			ctx.body = [];
+			ctx.message = `There's no finance linked to the user: ${ctx.params.id}`;
+			next();
 		} else {
 			ctx.body = myFinance;
 			next();
