@@ -68,9 +68,6 @@ router.post('/register', async (ctx) => {
 		const body = ctx.request.body;
 		const oldUserEmail = await ctx.db.User.findOne({where: {email: body.email}});
 		const oldUserRut = await ctx.db.User.findOne({where: {rut: body.rut}});
-		// console.log("MARA");
-		// console.log(oldUserEmail);
-		// console.log(oldUserRut);
 
 		if (oldUserEmail || oldUserRut) {
 			ctx.response.status = 403;
