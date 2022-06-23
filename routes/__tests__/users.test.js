@@ -162,7 +162,7 @@ describe('Users Test Suite', function() {
 				goalAmount: 54020.0,
 				currentState: 'pending',
 				date: new Date(),
-				tags: 'testing tag',
+				tags: ['test', 'test2'],
 				createdAt: new Date(),
 				userId: user.id,
 			};

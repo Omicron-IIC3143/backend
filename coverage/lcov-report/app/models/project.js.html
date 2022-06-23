@@ -135,7 +135,9 @@
 <a name='L70'></a><a href='#L70'>70</a>
 <a name='L71'></a><a href='#L71'>71</a>
 <a name='L72'></a><a href='#L72'>72</a>
-<a name='L73'></a><a href='#L73'>73</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L73'></a><a href='#L73'>73</a>
+<a name='L74'></a><a href='#L74'>74</a>
+<a name='L75'></a><a href='#L75'>75</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">9x</span>
@@ -161,6 +163,8 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">9x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -269,7 +273,9 @@ module.exports = (sequelize, DataTypes) =&gt; {
 			type: DataTypes.DATE,
 			allowNull: false,
 		},
-		tags: DataTypes.TEXT,
+		tags: {
+			type: DataTypes.ARRAY(DataTypes.STRING),
+		},
 		userId: {
 			type: DataTypes.STRING,
 			allowNull: false,

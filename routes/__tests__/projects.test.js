@@ -57,7 +57,7 @@ describe('Projects Test Suite', function() {
 				goalAmount: 1000,
 				currentState: 'pending',
 				date: '2022-05-28',
-				tags: 'tag-1',
+				tags: ['tag1', 'tag2'],
 				userId: 1,
 			};
 			const response = await request
@@ -87,7 +87,7 @@ describe('Projects Test Suite', function() {
 				goalAmount: 1010,
 				currentState: 'pending',
 				date: '2022-05-28',
-				tags: 'tag-1',
+				tags: ['tag1', 'tag2'],
 				userId: 1,
 			};
 

@@ -23,16 +23,16 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">95.91% </span>
+                <span class="strong">93.87% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>47/49</span>
+                <span class='fraction'>46/49</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">90% </span>
+                <span class="strong">80% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>9/10</span>
+                <span class='fraction'>8/10</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">95.91% </span>
+                <span class="strong">93.87% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>47/49</span>
+                <span class='fraction'>46/49</span>
             </div>
         
             
@@ -223,12 +223,12 @@
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
@@ -313,8 +313,8 @@ router.put('/:id', passport.authenticate('jwt', { session: false }), async (ctx)
 			ctx.response.status = 200;
 			ctx.message = 'Project updated';
 			ctx.body = data;
-		} else {
-			throw new Error('Something is wrong check the parameters');
+		} else <span class="missing-if-branch" title="else path not taken" >E</span>{
+<span class="cstat-no" title="statement not covered" >			throw new Error('Something is wrong check the parameters');</span>
 		}
 	} catch (ValidationError) {
 		ctx.throw(400, `${ValidationError}`);
