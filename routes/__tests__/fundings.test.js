@@ -179,7 +179,7 @@ describe('Funding Test Suite', function() {
 				goalAmount: 1000,
 				currentState: 'pending',
 				date: '2022-05-28',
-				tags: 'tag-1',
+				tags: ['tag1', 'tag2'],
 				userId: 1,
 			};
 			const project = await app.context.db.Project.create(projectBody);

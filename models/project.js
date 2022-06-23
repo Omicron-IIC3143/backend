@@ -61,7 +61,7 @@ module.exports = (sequelize, DataTypes) => {
 			allowNull: false,
 		},
 		tags: {
-			type: DataTypes.ARRAY(DataTypes.TEXT),
+			type: DataTypes.ARRAY(DataTypes.STRING),
 		},
 		userId: {
 			type: DataTypes.STRING,
