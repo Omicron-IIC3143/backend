@@ -85,7 +85,7 @@ router.put('/:id', passport.authenticate('jwt', { session: false }), async (ctx)
 });
 
 // Get project report by id
-router.get('/:id/report', passport.authenticate('jwt', { session: false }), async (ctx, next) => {
+router.get('/:id/report', async (ctx, next) => {
 	try{
 		const projectReport = await ctx.db.Project.findByPk(ctx.params.id, {
 			include: [ctx.db.Reports]
