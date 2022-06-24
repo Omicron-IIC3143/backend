@@ -46,6 +46,24 @@ describe('Projects Test Suite', function() {
 			expect(project.name).toBe('Teleton');
 		});
 
+		test('get project report', async () => {
+			const response = await request
+				.get(`${baseUrl}/1/report`)
+				.set('Content-type', 'application/json')
+				.set('Authorization', `Bearer ${token}`);
+	
+			const projectReport = response.body;
+
+			expect(response.status).toBe(200);
+			projectReport.map((report) => {
+				if (report.id == 1) {
+					expect(report.title).toBe('Teleton esta con un buen progreso.');
+				} else if (report.id == 2) {
+					expect(report.title).toBe('Colecta avanza de forma lenta.');
+				}
+			});
+		});
+
 		test('post new project', async () => {
 			const newProject = {
 				name: 'projecto nuevo',
@@ -221,6 +239,25 @@ describe('Projects Test Suite', function() {
 				.set('Content-type', 'application/json');
 
 			expect(response.status).toBe(404);
+		});
+		test('get project report - no project', async () => {
+			const response = await request
+				.get(`${baseUrl}/${newProjectId}/report`)
+				.set('Content-type', 'application/json')
+				.set('Authorization', `Bearer ${token}`);
+
+			expect(response.status).toBe(404);
+		});
+
+		test('get project report - no report', async () => {
+			const response = await request
+				.get(`${baseUrl}/3/report`)
+				.set('Content-type', 'application/json')
+				.set('Authorization', `Bearer ${token}`);
+
+			expect(response.status).toBe(200);
+			const projectReport = response.body;
+			expect(projectReport).toEqual([]);
 		});
 	});
 });

@@ -84,4 +84,30 @@ router.put('/:id', passport.authenticate('jwt', { session: false }), async (ctx)
 	}
 });
 
+// Get project report by id
+router.get('/:id/report', passport.authenticate('jwt', { session: false }), async (ctx, next) => {
+	try{
+		const projectReport = await ctx.db.Project.findByPk(ctx.params.id, {
+			include: [ctx.db.Reports]
+		});
+		
+		if (!projectReport) {
+			throw new Error(`Project with id: ${ctx.params.id} does not exist.`);
+		} else {
+			console.log(projectReport.Report);
+			//console.log(Object.keys(projectReport.Report));
+			if (projectReport.Report) {
+				ctx.body = [projectReport.Report];
+				next();
+			} else {
+				ctx.body = [];
+				ctx.message = `Project with id: ${ctx.params.id} has no reports.`;
+				next();
+			}
+		}
+	}catch (ValidationError) {
+		ctx.throw(404, `${ValidationError}`);
+	}
+});
+
 module.exports = router;
