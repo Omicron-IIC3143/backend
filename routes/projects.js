@@ -94,10 +94,9 @@ router.get('/:id/report', passport.authenticate('jwt', { session: false }), asyn
 		if (!projectReport) {
 			throw new Error(`Project with id: ${ctx.params.id} does not exist.`);
 		} else {
-			console.log(projectReport.Report);
 			//console.log(Object.keys(projectReport.Report));
-			if (projectReport.Report) {
-				ctx.body = [projectReport.Report];
+			if (projectReport.Reports.length) {
+				ctx.body = projectReport.Reports;
 				next();
 			} else {
 				ctx.body = [];
