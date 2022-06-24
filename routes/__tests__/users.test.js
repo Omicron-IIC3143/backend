@@ -30,7 +30,7 @@ describe('Users Test Suite', function() {
 			jwt = response.body.token;
 			id = response.body.user.id;
 
-			expect(response.status).toBe(200);
+			expect(response.status).toBe(201);
 		});
 
 		test('get seed users', async () => {
@@ -87,7 +87,8 @@ describe('Users Test Suite', function() {
 				.set('Content-type', 'application/json')
 				.set('Authorization', `Bearer ${jwt}`);
 
-			expect(response.status).toBe(400);
+			expect(response.status).toBe(200);
+			expect(response.body).toStrictEqual([]);
 		});
 
 		test('user login', async () => {
@@ -161,7 +162,7 @@ describe('Users Test Suite', function() {
 				goalAmount: 54020.0,
 				currentState: 'pending',
 				date: new Date(),
-				tags: 'testing tag',
+				tags: ['test', 'test2'],
 				createdAt: new Date(),
 				userId: user.id,
 			};
@@ -212,10 +213,9 @@ describe('Users Test Suite', function() {
 				.set('Content-type', 'application/json')
 				.set('Authorization', `Bearer ${token}`);
 
-			expect(response.status).toBe(400);
+			expect(response.status).toBe(404);
 		});
-
-		test('register user - already registared', async () => {
+		test('register user - already registared - same email', async () => {
 			const oldUser = {
 				name: 'vicho',
 				rut: '123',
@@ -232,8 +232,27 @@ describe('Users Test Suite', function() {
 				.send(oldUser);
 
 			expect(response.status).toBe(403);
+			expect(response.res.text).toBe('Error: El email ya esta siendo usado por otro usuario');
 		});
+		test('register user - already registared - same rut', async () => {
+			const oldUser = {
+				name: 'vicho',
+				rut: '8673766-3',
+				email: 'vicho1@uc.cl',
+				password: 'vicho',
+				money: 0,
+				pictureUrl: 'hello',
+				description: 'description'
+			};
 
+			const response = await request
+				.post(`${baseUrl}/register`)
+				.set('Content-type', 'application/json')
+				.send(oldUser);
+
+			expect(response.status).toBe(403);
+			expect(response.res.text).toBe('Error: El Rut ya esta siendo usado por otro usuario');
+		});
 		test('register user - invalid body', async () => {
 			const invalidUser = {
 				name: 'vicho',
@@ -248,7 +267,7 @@ describe('Users Test Suite', function() {
 				.set('Content-type', 'application/json')
 				.send(invalidUser);
 
-			expect(response.status).toBe(400);
+			expect(response.status).toBe(404);
 		});
 
 		test('user login - no user', async () => {
@@ -262,7 +281,7 @@ describe('Users Test Suite', function() {
 				.set('Content-type', 'application/json')
 				.send(loginUser);
 
-			expect(response.status).toBe(401);
+			expect(response.status).toBe(404);
 		});
 
 		test('user login - no password match', async () => {
@@ -276,7 +295,7 @@ describe('Users Test Suite', function() {
 				.set('Content-type', 'application/json')
 				.send(loginUser);
 
-			expect(response.status).toBe(401);
+			expect(response.status).toBe(403);
 		});
 		test('delete user - no user', async () => {
 			const response = await request
@@ -284,7 +303,7 @@ describe('Users Test Suite', function() {
 				.set('Content-type', 'application/json')
 				.set('Authorization', `Bearer ${token}`);
 
-			expect(response.status).toBe(400);
+			expect(response.status).toBe(404);
 		});
 
 		test('edit user - no user', async () => {

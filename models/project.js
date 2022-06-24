@@ -15,7 +15,7 @@ module.exports = (sequelize, DataTypes) => {
 			Project.belongsTo(models.User, {
 				foreignKey: 'userId',
 			});
-			Project.hasOne(models.Reports, {
+			Project.hasMany(models.Reports, {
 				foreignKey: 'projectId',
 			});
 			Project.hasMany(models.Funding, {
@@ -60,7 +60,9 @@ module.exports = (sequelize, DataTypes) => {
 			type: DataTypes.DATE,
 			allowNull: false,
 		},
-		tags: DataTypes.TEXT,
+		tags: {
+			type: DataTypes.ARRAY(DataTypes.STRING),
+		},
 		userId: {
 			type: DataTypes.STRING,
 			allowNull: false,

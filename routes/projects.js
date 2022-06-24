@@ -5,7 +5,6 @@ const router = new Router({
 	prefix: '/projects'
 });
 
-
 //Get All Projects
 router.get('/', async (ctx, next) => {
 	try {
@@ -17,16 +16,14 @@ router.get('/', async (ctx, next) => {
 			next();
 		}
 	} catch (ValidationError) {
-		ctx.throw(400, `${ValidationError}`);
+		ctx.throw(404, `${ValidationError}`);
 	}
 });
-
 
 //Get project by id
 router.get('/:id', async (ctx, next) => {
 	try {
 		let getCurrentProject = await ctx.db.Project.findAll({where: {id: ctx.params.id}});
-
 		if (getCurrentProject.length === 0) {
 			throw new Error(`There's no project under id: ${ctx.params.id}`);
 		} else {
@@ -37,7 +34,6 @@ router.get('/:id', async (ctx, next) => {
 		ctx.throw(404, `${ValidationError}`);
 	}
 });
-
 
 // Post new project
 router.post('/new', passport.authenticate('jwt', { session: false }), async (ctx) => {
@@ -52,10 +48,9 @@ router.post('/new', passport.authenticate('jwt', { session: false }), async (ctx
 		ctx.response.status = 201;
 		ctx.message = 'New project added';
 	} catch (ValidationError) {
-		ctx.throw(400, `Couldn't add the new project: ${ValidationError}`);
+		ctx.throw(404, `Couldn't add the new project: ${ValidationError}`);
 	}
 });
-
 
 // Delete project by id
 router.delete('/delete/:id', passport.authenticate('jwt', { session: false }), async (ctx) => {
@@ -68,17 +63,15 @@ router.delete('/delete/:id', passport.authenticate('jwt', { session: false }), a
 			throw new Error('Project not found');
 		}
 	} catch (ValidationError) {
-		ctx.throw(400, `${ValidationError}`);
+		ctx.throw(404, `${ValidationError}`);
 	}
 });
-
 
 // Update project by id
 router.put('/:id', passport.authenticate('jwt', { session: false }), async (ctx) => {
 	try {
 		var data = ctx.request.body;
 		const update = await ctx.db.Project.update(data, {where: {id: ctx.params.id}});
-		
 		if (update > 0) {
 			ctx.response.status = 200;
 			ctx.message = 'Project updated';
@@ -88,6 +81,31 @@ router.put('/:id', passport.authenticate('jwt', { session: false }), async (ctx)
 		}
 	} catch (ValidationError) {
 		ctx.throw(400, `${ValidationError}`);
+	}
+});
+
+// Get project report by id
+router.get('/:id/report', passport.authenticate('jwt', { session: false }), async (ctx, next) => {
+	try{
+		const projectReport = await ctx.db.Project.findByPk(ctx.params.id, {
+			include: [ctx.db.Reports]
+		});
+		
+		if (!projectReport) {
+			throw new Error(`Project with id: ${ctx.params.id} does not exist.`);
+		} else {
+			//console.log(Object.keys(projectReport.Report));
+			if (projectReport.Reports.length) {
+				ctx.body = projectReport.Reports;
+				next();
+			} else {
+				ctx.body = [];
+				ctx.message = `Project with id: ${ctx.params.id} has no reports.`;
+				next();
+			}
+		}
+	}catch (ValidationError) {
+		ctx.throw(404, `${ValidationError}`);
 	}
 });
 

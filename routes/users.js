@@ -5,11 +5,9 @@ const jwt = require('jsonwebtoken');
 
 // eslint-disable-next-line no-undef
 const secret = process.env.JWT_SECRET;
-
 const router = new Router({
 	prefix: '/users'
 });
-
 
 // Get all users
 router.get('/', passport.authenticate('jwt', { session: false }), async (ctx, next) => {
@@ -22,10 +20,9 @@ router.get('/', passport.authenticate('jwt', { session: false }), async (ctx, ne
 			next();
 		}
 	} catch (ValidationError) {
-		ctx.throw(400, `${ValidationError}`);
+		ctx.throw(404, `${ValidationError}`);
 	}
 });
-
 
 // Get user by id
 router.get('/:id', passport.authenticate('jwt', { session: false }), async (ctx, next) => {
@@ -55,69 +52,70 @@ router.get('/:id/projects', passport.authenticate('jwt', { session: false }), as
 				ctx.body = userProjects.Projects;
 				next();
 			} else {
-				throw new Error(`User with id: ${ctx.params.id} has no projects`);
+				ctx.body = [];
+				ctx.message = `User with id: ${ctx.params.id} has no projects`;
+				next();
 			}
 		}
 	}catch (ValidationError) {
-		ctx.throw(400, `${ValidationError}`);
+		ctx.throw(404, `${ValidationError}`);
 	}
 });
-
 
 // Register new user
 router.post('/register', async (ctx) => {
 	try {
 		const body = ctx.request.body;
-		const oldUser = await ctx.db.User.findOne({where: {email: body.email}});
-		
-		if (oldUser) {
+		const oldUserEmail = await ctx.db.User.findOne({where: {email: body.email}});
+		const oldUserRut = await ctx.db.User.findOne({where: {rut: body.rut}});
+
+		if (oldUserEmail || oldUserRut) {
 			ctx.response.status = 403;
-			ctx.body = 'Error: Email already in use';
+			if (oldUserEmail?.email == body.email){
+				ctx.body = 'Error: El email ya esta siendo usado por otro usuario';
+			}else if (oldUserRut?.rut == body.rut){
+				ctx.body = 'Error: El Rut ya esta siendo usado por otro usuario';
+			}else{
+				throw new Error('Something wrong happen try again');
+			}
 		} else {
 			const salt = bcrypt.genSaltSync();
 			const hash = bcrypt.hashSync(body.password, salt);
 			body.password = hash; 
 			const user = await ctx.db.User.build(body);
 			await user.save();
-
 			const token = jwt.sign(body, secret, {subject: user.id.toString()});
-
 			ctx.token = token;
-			ctx.response.status = 200;
+			ctx.response.status = 201;
 			ctx.body = {user, token};
 		}
 	} catch (ValidationError) {
 		console.log(ValidationError);
-		ctx.throw(400, 'Couldn\'t add the new user');
+		ctx.throw(404, 'Couldn\'t add the new user');
 	}
 });
-
 
 // Login user
 router.post('/login', async (ctx) => {
 	const body = ctx.request.body;
 	const user = await ctx.db.User.findOne({where: {email: body.email}});
-
 	if (!user) {
-		ctx.response.status = 401;
+		ctx.response.status = 404;
 		ctx.body = 'Error: User does not exist.';
 	} else {
 		console.log(body.password, user.password);
 		const passwordMatch = bcrypt.compareSync(body.password, user.password);
-
 		if (!passwordMatch) {
-			ctx.response.status = 401;
+			ctx.response.status = 403;
 			ctx.body = 'Error: Incorrect password.';
 		} else {
 			const token = jwt.sign(body, secret, {subject: user.id.toString()});
-	
 			ctx.token = token;
 			ctx.response.status = 200;
 			ctx.body = {user, token};
 		}
 	}
 });
-
 
 // Delete a user by id
 router.delete('/delete/:id', passport.authenticate('jwt', { session: false }), async (ctx) => {
@@ -127,19 +125,16 @@ router.delete('/delete/:id', passport.authenticate('jwt', { session: false }), a
 			let user = await ctx.db.User.findOne({where: {email: 'deleted@uc.cl'}});
 			let projects = await ctx.db.Project.findAll({where: {userId: ctx.params.id}});
 			let fundings = await ctx.db.Funding.findAll({where: {userId: ctx.params.id}});
-
 			if (projects.length > 0) {
 				projects.map(async (proj) => {
 					return await ctx.db.Project.update({userId: user.dataValues.id, currentState: 'deleted'}, {where: {id: proj.dataValues.id}});
 				});
 			}
-
 			if (fundings.length > 0) {
 				fundings.map(async (fin) => {
 					return await ctx.db.Funding.update({userId: user.dataValues.id}, {where: {id: fin.dataValues.id}});
 				});
 			}
-			
 			try {				
 				let deleted = await ctx.db.User.destroy({where: {id: ctx.params.id}});
 				if (deleted > 0) {
@@ -156,10 +151,10 @@ router.delete('/delete/:id', passport.authenticate('jwt', { session: false }), a
 		console.log(ValidationError.message);
 		let old = await ctx.db.User.findOne({where: {id: ctx.params.id}});
 		if (old){
-			ctx.throw(400, ValidationError);
+			ctx.throw(404, ValidationError);
 		}else{
 			if (ValidationError.message === 'User not found'){
-				ctx.throw(400, ValidationError);
+				ctx.throw(404, ValidationError);
 			}else{
 				console.log('desde catch');
 				ctx.throw(200, `User ${ctx.params.id} deleted`);
@@ -168,19 +163,16 @@ router.delete('/delete/:id', passport.authenticate('jwt', { session: false }), a
 	}
 });
 
-// Edit user by id
+// Update user by id
 router.put('/:id', passport.authenticate('jwt', { session: false }), async (ctx) => {
 	try{
 		var data = ctx.request.body;
-
 		if (data.password) {
 			const salt = bcrypt.genSaltSync();
 			const hash = bcrypt.hashSync(data.password, salt);
 			data.password = hash;
 		}
-
 		const update = await ctx.db.User.update(data, {where: {id: ctx.params.id}});
-
 		if (update > 0) {
 			const updated_user = await ctx.db.User.findOne({where: {id: ctx.params.id}});
 			ctx.body = {user: updated_user};

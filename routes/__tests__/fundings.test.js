@@ -154,7 +154,8 @@ describe('Funding Test Suite', function() {
 				.set('Content-type', 'application/json')
 				.set('Authorization', `Bearer ${token}`);
 
-			expect(response.status).toBe(404);
+			expect(response.status).toBe(200);
+			expect(response.body).toStrictEqual([]);
 			await app.context.db.User.destroy({
 				where: {
 					id: user.id
@@ -179,7 +180,7 @@ describe('Funding Test Suite', function() {
 				goalAmount: 1000,
 				currentState: 'pending',
 				date: '2022-05-28',
-				tags: 'tag-1',
+				tags: ['tag1', 'tag2'],
 				userId: 1,
 			};
 			const project = await app.context.db.Project.create(projectBody);
@@ -215,7 +216,7 @@ describe('Funding Test Suite', function() {
 				.set('Authorization', `Bearer ${token}`)
 				.send(testPostFunding);
 
-			expect(response.status).toBe(400);
+			expect(response.status).toBe(404);
 		});
 		test('post funding - no project with id x', async () => {
 			const testPostFunding = {
@@ -230,7 +231,7 @@ describe('Funding Test Suite', function() {
 				.set('Authorization', `Bearer ${token}`)
 				.send(testPostFunding);
 
-			expect(response.status).toBe(400);
+			expect(response.status).toBe(404);
 		});
 		test('post funding - user does not have sufficient money', async () => {
 			const testPostFunding = {
@@ -246,7 +247,7 @@ describe('Funding Test Suite', function() {
 				.send(testPostFunding);
 
 
-			expect(response.status).toBe(400);
+			expect(response.status).toBe(404);
 		});
 		test('post funding - funding with amount 0', async () => {
 			const testPostFunding = {
@@ -262,7 +263,7 @@ describe('Funding Test Suite', function() {
 				.send(testPostFunding);
 
 
-			expect(response.status).toBe(400);
+			expect(response.status).toBe(404);
 		});
 		test('post funding - no validation', async () => {
 			const testPostFunding = {
@@ -284,7 +285,7 @@ describe('Funding Test Suite', function() {
 				.set('Content-type', 'application/json')
 				.set('Authorization', `Bearer ${token}`);
 
-			expect(response.status).toBe(400);
+			expect(response.status).toBe(404);
 		});
 		test('edit funding - no funding', async () => {
 			const testEditFunding = {
