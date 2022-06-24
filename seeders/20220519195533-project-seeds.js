@@ -3,9 +3,7 @@ module.exports = {
 	up: (queryInterface, Sequelize) => {
 		return queryInterface.bulkInsert('Projects', [{
 			name: 'Teleton',
-			description: 'El Teletón o Telemaratón (composición de Televisión y Maratón) es un evento benéfico televisado, \
-			en el que se intercalan diversas presentaciones artísticas y de entretenimiento que se realiza actualmente en diferentes \
-			países con el fin de recaudar fondos para distintas causas sociales.',
+			description: 'El Teletón o Telemaratón (composición de Televisión y Maratón) es un evento benéfico televisado, en el que se intercalan diversas presentaciones artísticas y de entretenimiento que se realiza actualmente en diferentes países con el fin de recaudar fondos para distintas causas sociales.',
 			pictureUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/26/Logo_Telet%C3%B3n.svg/1024px-Logo_Telet%C3%B3n.svg.png',
 			company: 'Teleton S.A',
 			topic: 'ayuda social',
@@ -20,9 +18,7 @@ module.exports = {
 		},
 		{
 			name: 'Colecta Social',
-			description: 'La Colecta Anual de Cáritas es una oportunidad privilegiada de encuentro solidario. \
-			Hoy, más que nunca, nos reunimos como comunidad creyente para promover el compromiso en nuestra sociedad \
-			y brindar oportunidades a los hermanos más pobres y excluidos de nuestro país.',
+			description: 'La Colecta Anual de Cáritas es una oportunidad privilegiada de encuentro solidario. Hoy, más que nunca, nos reunimos como comunidad creyente para promover el compromiso en nuestra sociedad y brindar oportunidades a los hermanos más pobres y excluidos de nuestro país.',
 			pictureUrl: 'https://fundacioncuentaconnosotros.org/wp-content/uploads/Campana-Alcancia-Solidaria.jpg',
 			company: 'Colecta Social S.A',
 			topic: 'Ayuda social',
@@ -37,9 +33,7 @@ module.exports = {
 		},
 		{
 			name: 'Un Techo para Chile',
-			description: 'Buscamos mejorar las condiciones de vivienda y hábitat a través del diseño, \
-			gestión y construcción de proyectos de vivienda, acceso a servicios básicos e infraestructura comunitaria, \
-			en acción conjunta entre pobladores y voluntarios.',
+			description: 'Buscamos mejorar las condiciones de vivienda y hábitat a través del diseño, gestión y construcción de proyectos de vivienda, acceso a servicios básicos e infraestructura comunitaria, en acción conjunta entre pobladores y voluntarios.',
 			pictureUrl: 'https://upload.wikimedia.org/wikipedia/commons/d/d0/Logo_TECHO_Chile.jpg',
 			company: 'Techo para Chile ltda',
 			topic: 'Ayuda social',
@@ -54,9 +48,7 @@ module.exports = {
 		},
 		{
 			name: 'Refrigeradores con comida Gratuita',
-			description: 'Con el lema: "toma lo que necesites y deja lo que puedas" Toronto Community Fridges es un proyecto \
-			que ha instalado refrigeradores y despensas en el exterior de diversas tiendas en Toronto. En estos spots, los vecinos \
-			pueden colocar alimentos que estén en buen estado para que otras personas tomen lo que necesiten.',
+			description: 'Con el lema: "toma lo que necesites y deja lo que puedas" Toronto Community Fridges es un proyecto que ha instalado refrigeradores y despensas en el exterior de diversas tiendas en Toronto. En estos spots, los vecinos pueden colocar alimentos que estén en buen estado para que otras personas tomen lo que necesiten.',
 			pictureUrl: 'https://themonopolitan.com/assets/img/post/monopolitan/proyectos%20sociales_toronto-community-fridges.jpg?ezimgfmt=ng:webp/ngcb80',
 			company: 'Toronto Community Fridges',
 			topic: 'Alimentacion',
@@ -71,11 +63,7 @@ module.exports = {
 		},
 		{
 			name: 'Muebles hechos por refugiados',
-			description: 'Cucula inicia con la historia de Malik, Moussa, Saidou, Maiga y Ali, 5 jóvenes africanos que decidieron \
-			ir a Europa en busca de oportunidades, trabajo y futuro. Llegaron a tierras mediterráneas con espíritu y fé, pero sólo \
-			encontraron hambre, fríos y rechazo.\n Cabizbajos, pero con la ilusión latente en sus corazones, los 5 jóvenes viajaron \
-			hasta Berlín y fue entonces que encontraron la oportunidad de sus vidas cuando un colectivo de diseñadores los acogió para \
-			darles vivienda y la oportunidad de desenvolverse profesionalmente creando una colección de muebles para el hogar.',
+			description: 'Cucula inicia con la historia de Malik, Moussa, Saidou, Maiga y Ali, 5 jóvenes africanos que decidieron ir a Europa en busca de oportunidades, trabajo y futuro. Llegaron a tierras mediterráneas con espíritu y fé, pero sólo encontraron hambre, fríos y rechazo.\n Cabizbajos, pero con la ilusión latente en sus corazones, los 5 jóvenes viajaron hasta Berlín y fue entonces que encontraron la oportunidad de sus vidas cuando un colectivo de diseñadores los acogió para darles vivienda y la oportunidad de desenvolverse profesionalmente creando una colección de muebles para el hogar.',
 			pictureUrl: 'https://themonopolitan.com/assets/img/post/monopolitan/proyectos%20sociales_cucula.jpg?ezimgfmt=ng:webp/ngcb80',
 			company: 'Berlin Design',
 			topic: 'Reinserción',

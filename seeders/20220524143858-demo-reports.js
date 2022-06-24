@@ -13,8 +13,7 @@ module.exports = {
 		},
 		{
 			title: 'Colecta avanza de forma lenta.',
-			description: 'Por culpa de la pandemia menos gente sale a las calles a donar y ser parte de esta colecta \
-			les pedimos incentiven a la gente a salir y donar.',
+			description: 'Por culpa de la pandemia menos gente sale a las calles a donar y ser parte de esta colecta les pedimos incentiven a la gente a salir y donar.',
 			pictureUrl: 'https://araucanianoticias.cl/wp-content/uploads/2016/09/FOTO-colecta-down-sur-1.jpg',
 			projectId: 2,
 			createdAt: new Date(2021, 1, 5),
@@ -22,8 +21,7 @@ module.exports = {
 		},
 		{
 			title: 'Colecta esta agarrando mas vuelo.',
-			description: 'Luego de los desafios que se acercaron a nosotros por parte de la \
-			pandemia, nosotros nos encontramos con una gran necesidad de ayuda',
+			description: 'Luego de los desafios que se acercaron a nosotros por parte de la pandemia, nosotros nos encontramos con una gran necesidad de ayuda',
 			pictureUrl: 'https://araucanianoticias.cl/wp-content/uploads/2016/09/FOTO-colecta-down-sur-1.jpg',
 			projectId: 2,
 			createdAt: new Date(2021, 2, 5),
