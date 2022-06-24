@@ -19,7 +19,16 @@ module.exports = {
 			projectId: 2,
 			createdAt: new Date(2021, 1, 5),
 			updatedAt: new Date()
-		},]);
+		},
+		{
+			title: 'Colecta esta agarrando mas vuelo.',
+			description: 'Luego de los desafios que se acercaron a nosotros por parte de la \
+			pandemia, nosotros nos encontramos con una gran necesidad de ayuda',
+			pictureUrl: 'https://araucanianoticias.cl/wp-content/uploads/2016/09/FOTO-colecta-down-sur-1.jpg',
+			projectId: 2,
+			createdAt: new Date(2021, 2, 5),
+			updatedAt: new Date()
+		}]);
 	},
 
 	async down (queryInterface, Sequelize) {

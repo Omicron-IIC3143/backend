@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1656033008986" clover="3.2.0">
-  <project timestamp="1656033008986" name="All files">
-    <metrics statements="397" coveredstatements="383" conditionals="101" coveredconditionals="87" methods="43" coveredmethods="42" elements="541" coveredelements="512" complexity="0" loc="397" ncloc="397" packages="4" files="12" classes="12"/>
+<coverage generated="1656049182893" clover="3.2.0">
+  <project timestamp="1656049182895" name="All files">
+    <metrics statements="396" coveredstatements="382" conditionals="101" coveredconditionals="87" methods="43" coveredmethods="42" elements="540" coveredelements="511" complexity="0" loc="396" ncloc="396" packages="4" files="12" classes="12"/>
     <package name="app">
       <metrics statements="37" coveredstatements="36" conditionals="0" coveredconditionals="0" methods="3" coveredmethods="2"/>
       <file name="app.js" path="/usr/app/app.js">
@@ -106,8 +106,8 @@
         <line num="4" count="9" type="stmt"/>
         <line num="5" count="9" type="stmt"/>
         <line num="14" count="9" type="stmt"/>
-        <line num="20" count="9" type="stmt"/>
-        <line num="38" count="9" type="stmt"/>
+        <line num="19" count="9" type="stmt"/>
+        <line num="37" count="9" type="stmt"/>
       </file>
       <file name="user.js" path="/usr/app/models/user.js">
         <metrics statements="6" coveredstatements="6" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
@@ -120,7 +120,7 @@
       </file>
     </package>
     <package name="app.routes">
-      <metrics statements="310" coveredstatements="298" conditionals="84" coveredconditionals="75" methods="28" coveredmethods="28"/>
+      <metrics statements="309" coveredstatements="297" conditionals="84" coveredconditionals="75" methods="28" coveredmethods="28"/>
       <file name="fundings.js" path="/usr/app/routes/fundings.js">
         <metrics statements="76" coveredstatements="73" conditionals="22" coveredconditionals="21" methods="7" coveredmethods="7"/>
         <line num="1" count="9" type="stmt"/>
@@ -210,7 +210,7 @@
         <line num="13" count="9" type="stmt"/>
       </file>
       <file name="projects.js" path="/usr/app/routes/projects.js">
-        <metrics statements="62" coveredstatements="59" conditionals="14" coveredconditionals="12" methods="6" coveredmethods="6"/>
+        <metrics statements="61" coveredstatements="58" conditionals="14" coveredconditionals="12" methods="6" coveredmethods="6"/>
         <line num="1" count="9" type="stmt"/>
         <line num="2" count="9" type="stmt"/>
         <line num="4" count="9" type="stmt"/>
@@ -264,15 +264,14 @@
         <line num="90" count="3" type="stmt"/>
         <line num="94" count="3" type="cond" truecount="2" falsecount="0"/>
         <line num="95" count="1" type="stmt"/>
-        <line num="97" count="2" type="stmt"/>
-        <line num="99" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="98" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="99" count="1" type="stmt"/>
         <line num="100" count="1" type="stmt"/>
-        <line num="101" count="1" type="stmt"/>
+        <line num="102" count="1" type="stmt"/>
         <line num="103" count="1" type="stmt"/>
         <line num="104" count="1" type="stmt"/>
-        <line num="105" count="1" type="stmt"/>
-        <line num="109" count="1" type="stmt"/>
-        <line num="113" count="9" type="stmt"/>
+        <line num="108" count="1" type="stmt"/>
+        <line num="112" count="9" type="stmt"/>
       </file>
       <file name="reports.js" path="/usr/app/routes/reports.js">
         <metrics statements="51" coveredstatements="49" conditionals="12" coveredconditionals="11" methods="5" coveredmethods="5"/>
